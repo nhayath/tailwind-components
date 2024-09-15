@@ -1,0 +1,75 @@
+<html lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+
+    <main class="py-8">
+        <div class="container max-w-screen-xl mx-auto">
+
+            <!-- heading and filters -->
+            <section class="px-4 2xl:px-0 ">
+                <!-- catalog top navbar -->
+                <nav class="justify-between sm:flex">
+                    <div>
+                        <h2 class="text-xl font-semibold dark:text-white sm:text-2xl">Furnitures</h2>
+                    </div>
+                    <div class="flex items-center space-x-4">
+
+
+                        <!-- filter -->
+                        <div class="flex">
+                            Filter
+                        </div>
+
+
+                        <!-- sort -->
+                        <div class="relative">
+                            <button type="button" class="flex items-center border px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800 focus:z-10 focus:outline-none">
+                                <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4" />
+                                </svg>
+                                Sort
+                                <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+                                  </svg>
+                            </button>
+
+                            <!-- sort menu -->
+                             <div id="dropdown" class="block absolute right-0 z-50 w-40 shadow">
+                                <ul class="p-2 text-left text-sm font-medium text-gray-500">
+                                    <li>
+                                        <a href="#" class="group inline-flex w-full items-center px-3 py-2 text-gray-500">The most popular</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="group inline-flex w-full items-center px-3 py-2 text-gray-500">The most popular</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="group inline-flex w-full items-center px-3 py-2 text-gray-500">The most popular</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="group inline-flex w-full items-center px-3 py-2 text-gray-500">The most popular</a>
+                                    </li>
+                                </ul>
+                             </div>
+                        </div>
+                    </div>
+
+                </nav>
+
+            </section> 
+        </div>
+        
+
+    </main>
+
+</body>
+</html>
