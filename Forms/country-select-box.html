@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Country Select Box</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+
+    <div class="relative w-64">
+        <!-- Visible Input Field for Selected Country -->
+        <div id="selectedCountry" class="w-full px-3 py-2 border rounded-md bg-white cursor-pointer" 
+             onclick="toggleDropdown()">Select Country</div>
+        
+        <!-- Hidden Input Field to Store Selected Country Value -->
+        <input type="hidden" id="countryValue" name="country" />
+
+        <!-- Dropdown List (Initially Hidden) -->
+        <div id="countryDropdown" class="hidden absolute z-10 bg-white border border-gray-200 rounded-md shadow-lg w-full max-h-60 overflow-auto">
+            
+            <!-- Search Input -->
+            <input type="text" id="searchCountry" placeholder="Search country..." onkeyup="filterCountries()" 
+                   class="w-full px-3 py-2 mb-2 border-b focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+            <!-- Country Options -->
+            <div id="countryList">
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="United States">United States</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="Canada">Canada</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="United Kingdom">United Kingdom</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="Australia">Australia</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="Germany">Germany</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="India">India</div>
+                <div class="country-item px-4 py-2 cursor-pointer hover:bg-indigo-500 hover:text-white" data-value="Japan">Japan</div>
+                <!-- Add more countries as needed -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('countryDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Function to filter the countries based on search input
+        function filterCountries() {
+            const input = document.getElementById("searchCountry").value.toUpperCase();
+            const countryItems = document.querySelectorAll(".country-item");
+
+            countryItems.forEach(item => {
+                let country = item.getAttribute('data-value');
+                if (country.toUpperCase().indexOf(input) > -1) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        // Event listener to select a country and store its value in the hidden input field
+        document.querySelectorAll('.country-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const selectedCountry = this.getAttribute('data-value');
+                document.getElementById('selectedCountry').textContent = selectedCountry;
+                document.getElementById('countryValue').value = selectedCountry;
+                document.getElementById('countryDropdown').classList.add('hidden');
+            });
+        });
+
+        // Close dropdown when clicked outside
+        window.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('countryDropdown');
+            const selectedCountry = document.getElementById('selectedCountry');
+
+            if (!selectedCountry.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes rainbow-border {
+          0% { border-color: red; }
+          20% { border-color: orange; }
+          40% { border-color: yellow; }
+          60% { border-color: green; }
+          80% { border-color: blue; }
+          100% { border-color: purple; }
+        }
+    
+        .rainbow-border {
+          animation: rainbow-border 3s linear infinite;
+        }
+    
+        .hover-shadow {
+          transition: box-shadow 0.3s ease;
+        }
+    
+        .hover-shadow:hover {
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+      </style>
+    <title>Furniture Grid</title>
+</head>
+<body>
+    <body class="flex items-center justify-center min-h-screen bg-gray-100">
+  
+        <div class="relative bg-white rounded-lg p-4 shadow-lg hover-shadow rainbow-border border-4 max-w-xs">
+          <!-- Product Image -->
+          <div class="relative">
+            <img src="https://via.placeholder.com/300x200" alt="Product Image" class="w-full h-auto rounded-lg">
+            <!-- Floating Sale Tag -->
+            <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold py-1 px-2 rounded-full">
+              Sale
+            </span>
+          </div>
+      
+          <!-- Product Info -->
+          <div class="mt-4">
+            <h2 class="text-lg font-semibold text-gray-800">Product Title</h2>
+            <div class="flex items-center space-x-2">
+              <span class="text-xl font-bold text-gray-900">$49.99</span>
+              <span class="text-sm text-gray-500 line-through">$69.99</span>
+            </div>
+          </div>
+      
+          <!-- Footer with icons -->
+          <div class="mt-4 pt-2 border-t border-gray-200">
+            <div class="flex justify-between items-center text-gray-500 text-sm">
+              <!-- Thumbs Up Icon -->
+              <div class="flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 10a2 2 0 012-2h2V6a4 4 0 014-4h1.882a2 2 0 011.93 2.518l-.737 3.436A2 2 0 0014 10h4a2 2 0 012 2v2a2 2 0 01-2 2h-5l-2.071 3.106A2 2 0 017 18v-3H4a2 2 0 01-2-2v-3z"/>
+                </svg>
+                <span>120</span>
+              </div>
+              <!-- Comments Icon -->
+              <div class="flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.977 8.977 0 01-4.39-1.114l-3.022.805A1 1 0 011 15.805V15a7.978 7.978 0 01-1-3c0-4.418 3.582-8 8-8s8 3.582 8 8zm-3-1H5v2h10v-2z" clip-rule="evenodd"/>
+                </svg>
+                <span>45</span>
+              </div>
+              <!-- Share Icon -->
+              <div class="flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M15 8a3 3 0 10-2.83-4H9.83a3 3 0 000 2H12v4H8.83a3 3 0 00-.18 0H7.83a3 3 0 000 2h1.83v4h1.83a3 3 0 102.83-4H12V8h2.17A3 3 0 0015 8z"/>
+                </svg>
+              </div>
+              <!-- External Link Icon -->
+              <div class="flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12 4a1 1 0 00-1-1h-6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-6a1 1 0 10-2 0v6a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1h6a1 1 0 100-2zm5-1a1 1 0 00-1-1h-3a1 1 0 100 2h1.586l-6.293 6.293a1 1 0 001.414 1.414L16 5.414V7a1 1 0 102 0V3z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </body>
+</html>

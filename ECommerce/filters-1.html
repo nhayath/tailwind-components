@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Filters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for color circles */
+        .color-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-sm mx-auto bg-white p-4 rounded-lg shadow-md">
+        <!-- Categories Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('categories')">Categories</button>
+            <div id="categories" class="hidden">
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Desktop PC
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Laptops
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Tablets
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Gaming
+                </label>
+            </div>
+        </div>
+
+        <!-- Store Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('store')">Store</button>
+            <div id="store" class="hidden">
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Store 1
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Store 2
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Store 3
+                </label>
+            </div>
+        </div>
+
+        <!-- Brands Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('brands')">Brands</button>
+            <div id="brands" class="hidden">
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Brand A
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Brand B
+                </label>
+                <label class="block mb-1">
+                    <input type="checkbox" class="mr-2"> Brand C
+                </label>
+            </div>
+        </div>
+
+        <!-- Color Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('colors')">Colors</button>
+            <div id="colors" class="hidden flex space-x-2 mb-2">
+                <div class="color-circle bg-red-500" onclick="selectColor('Red')"></div>
+                <div class="color-circle bg-blue-500" onclick="selectColor('Blue')"></div>
+                <div class="color-circle bg-green-500" onclick="selectColor('Green')"></div>
+                <div class="color-circle bg-yellow-500" onclick="selectColor('Yellow')"></div>
+            </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('price')">Price Range</button>
+            <div id="price" class="hidden">
+                <input type="range" min="0" max="1000" step="50" class="w-full" id="priceRange">
+                <div id="priceValue" class="text-right text-sm mt-1">$0 - $1000</div>
+            </div>
+        </div>
+
+        <!-- In Stock Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" onclick="toggleAccordion('stock')">Stock Status</button>
+            <div id="stock" class="hidden">
+                <label class="block mb-1">
+                    <input type="radio" name="stock" class="mr-2"> In Stock
+                </label>
+                <label class="block mb-1">
+                    <input type="radio" name="stock" class="mr-2"> Out of Stock
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle accordion visibility
+        function toggleAccordion(id) {
+            const section = document.getElementById(id);
+            section.classList.toggle('hidden');
+        }
+
+        // Handle color selection
+        function selectColor(color) {
+            alert(`Color selected: ${color}`);
+        }
+
+        // Handle price range input
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        priceRange.addEventListener('input', function() {
+            priceValue.textContent = `$0 - $${priceRange.value}`;
+        });
+    </script>
+</body>
+</html>

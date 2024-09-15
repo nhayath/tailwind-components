@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Price Range Slider</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Slider Track */
+        .slider-track {
+            width: 100%;
+            height: 10px;
+            background-color: #808080;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        /* Slider Thumb */
+        .slider-thumb {
+            width: 24px;
+            height: 24px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        /* Hidden input fields */
+        input[type="number"] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div class="flex justify-between items-center mb-4">
+            <span id="minPriceLabel" class="text-xl">£0</span>
+            <span id="maxPriceLabel" class="text-xl">£1000</span>
+        </div>
+
+        <!-- Custom Slider -->
+        <div class="relative">
+            <div class="slider-track"></div>
+            <div id="minThumb" class="slider-thumb" style="left: 0;"></div>
+            <div id="maxThumb" class="slider-thumb" style="left: 100%;"></div>
+        </div>
+
+        <!-- Hidden inputs to store values -->
+        <input type="number" id="minValue" value="0">
+        <input type="number" id="maxValue" value="1000">
+    </div>
+
+    <script>
+        const sliderTrack = document.querySelector('.slider-track');
+        const minThumb = document.getElementById('minThumb');
+        const maxThumb = document.getElementById('maxThumb');
+        const minPriceLabel = document.getElementById('minPriceLabel');
+        const maxPriceLabel = document.getElementById('maxPriceLabel');
+        const minValueInput = document.getElementById('minValue');
+        const maxValueInput = document.getElementById('maxValue');
+
+        const sliderWidth = sliderTrack.offsetWidth;
+        let minValue = 0;
+        let maxValue = 1000;
+
+        let isDraggingMin = false;
+        let isDraggingMax = false;
+
+        // Convert pixel position to value
+        function pixelToValue(pixel) {
+            return Math.round((pixel / sliderWidth) * 1000);
+        }
+
+        // Move min thumb
+        minThumb.addEventListener('mousedown', () => isDraggingMin = true);
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingMin) {
+                const rect = sliderTrack.getBoundingClientRect();
+                let pos = e.clientX - rect.left;
+                if (pos < 0) pos = 0;
+                if (pos > maxThumb.offsetLeft - 10) pos = maxThumb.offsetLeft - 10;  // Avoid overlap with max thumb
+                
+                minThumb.style.left = `${(pos / sliderWidth) * 100}%`;
+                minValue = pixelToValue(pos);
+                minPriceLabel.innerText = `£${minValue}`;
+                minValueInput.value = minValue;
+            }
+        });
+        document.addEventListener('mouseup', () => isDraggingMin = false);
+
+        // Move max thumb
+        maxThumb.addEventListener('mousedown', () => isDraggingMax = true);
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingMax) {
+                const rect = sliderTrack.getBoundingClientRect();
+                let pos = e.clientX - rect.left;
+                if (pos > sliderWidth) pos = sliderWidth;
+                if (pos < minThumb.offsetLeft + 10) pos = minThumb.offsetLeft + 10;  // Avoid overlap with min thumb
+                
+                maxThumb.style.left = `${(pos / sliderWidth) * 100}%`;
+                maxValue = pixelToValue(pos);
+                maxPriceLabel.innerText = `£${maxValue}`;
+                maxValueInput.value = maxValue;
+            }
+        });
+        document.addEventListener('mouseup', () => isDraggingMax = false);
+    </script>
+</body>
+</html>
