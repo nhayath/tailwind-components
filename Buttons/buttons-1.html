@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Sample Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-4">
+    
+    <section class="block">
+        <h2 class="font-medium text-2xl">Simple Buttons</h2>
+        <div class="flex items-center py-3 space-x-2">
+            <button type="button" class="bg-blue-700 text-white px-3 py-2 hover:bg-blue-600">
+                Button 1
+            </button>
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Default</button>
+        </div>
+    </section>
+
+    <section class="block py-4">
+        <h2 class="font-medium text-2xl">Gradient Buttons</h2>
+
+        <div class="flex items-center py-3 space-x-2">
+            <!-- to-r -->
+            <button 
+                type="button" 
+                class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-3 py-2"
+            >
+                Button 1
+            </button>
+            <!-- to-r via -->
+            <button 
+                type="button" 
+                class="bg-gradient-to-r from-violet-500 via-indigo-300 to-fuchsia-500 text-white px-3 py-2"
+            >
+                Button 1
+            </button>
+
+            <!-- to-r via and stop position -->
+            <button 
+                type="button" 
+                class="bg-gradient-to-r from-violet-500 from-10% via-indigo-300 via-50% to-fuchsia-500 to-90% text-white px-3 py-2"
+            >
+                Button 1
+            </button>
+
+            <!-- hoover -->
+            <button type="button" class="bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white px-3 py-2">
+                Hover me
+              </button>
+
+        </div>
+    </section>
+</body>
+</html>
