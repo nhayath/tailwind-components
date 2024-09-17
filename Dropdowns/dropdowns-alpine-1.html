@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Sample Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="flex flex-col space-y-4 items-center justify-center min-h-screen bg-gray-100">
+    
+    <!-- dropdown 1 -->
+     <div class="relative" x-data="{isOpen: false}">
+        <button type="button" class="border px-3 py-2" @click="isOpen = !isOpen">
+            Dropdown 1
+        </button>
+        <div class="absolute shadow z-10 bg-gray-100" x-show="isOpen" @click.outside="isOpen = false">
+            <ul class="space-y-2 min-w-32 px-3 py-2">
+               <template x-for="i in 5">
+                <li x-text="'Item ' + i"></li>
+               </template>
+            </ul>
+        </div>
+     </div>
+
+     <!-- dropdown 2 -->
+     <div class="relative" x-data="dropdownData(['items 1', 'items 2'])">
+        <button type="button" class="border px-3 py-2" @click="isOpen = !isOpen">
+            Dropdown 2
+        </button>
+        <div class="absolute shadow z-10 bg-gray-100" x-show="isOpen" @click.outside="isOpen = false">
+            <ul class="space-y-2 min-w-32 px-3 py-2">
+               <template x-for="item in items">
+                <li x-text="item"></li>
+               </template>
+            </ul>
+        </div>
+     </div>
+
+      <!-- dropdown 3 -->
+      <div class="relative" x-data="dropdownData(list3)">
+        <button type="button" class="border px-3 py-2" @click="isOpen = !isOpen">
+            Dropdown 3
+        </button>
+        <div class="absolute shadow z-10 bg-gray-100" x-show="isOpen" @click.outside="isOpen = false">
+            <ul class="space-y-2 min-w-32 px-3 py-2">
+               <template x-for="item in items">
+                <li x-text="item"></li>
+               </template>
+            </ul>
+        </div>
+     </div>
+
+     <!-- dropdown 4 -->
+     <div class="relative" x-data="dropdownData(countries)">
+        <button type="button" class="border px-3 py-2" @click="isOpen = !isOpen">
+            Select your country
+        </button>
+        <div class="absolute shadow z-10 bg-gray-100 px-2 py-2" x-show="isOpen" @click.outside="isOpen = false">
+
+            <!-- Search Input -->
+            <input type="text" id="searchCountry" placeholder="Search country..." x-model="searchQuery"  
+                   class="w-full px-2 py-1 mb-2 border-b focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+            <!-- countries -->
+            <ul class="space-y-2 min-w-32 px-3 py-2">
+               <template x-for="item in searchItems">
+                <li x-text="item"></li>
+               </template>
+            </ul>
+        </div>
+     </div>
+
+     <!-- dropdown 5 -->
+     <div class="relative" x-data="dropdownData(colors)">
+        <button type="button" class="border px-3 py-2" @click="isOpen = !isOpen">
+            Select Colors
+        </button>
+        <div class="absolute shadow z-10 bg-gray-100" x-show="isOpen" @click.outside="isOpen = false">
+            <ul class="space-y-2 min-w-32 px-3 py-2">
+               <template x-for="(item, idx) in items">
+                <li>
+                    <div class="flex items-center">
+                        <input type="checkbox" :id="'color-' + idx" :value="item" x-model="selectedColors">
+                        <label :for="'color-' + idx" x-text="item"></label>
+                    </div>
+                </li>
+               </template>
+            </ul>
+        </div>
+
+        <div x-text="selectedColors"></div>
+     </div>
+
+     <script>
+        const list3 = ['D3 Item 1', 'D3 Item 1', 'D3 Item 3', 'D3 Item 3']
+        const countries = ['Palestine', 'Bangladesh', 'Saudi Arabia', 'Pakistan', 'Egypt', 'Kashmir', 'Iran']
+        const colors = ['Red', 'Green', 'Blue', 'Brown', 'White', 'Pink', 'Purple', 'Cream']
+
+        function dropdownData(items=[]) {
+            return {
+                isOpen: false,
+                searchQuery: '',
+                items,
+                selectedColors: [],
+                get searchItems() {
+                    if(this.searchQuery.length == 0) return items;
+                    return this.items.filter( country => country.toLowerCase().includes(this.searchQuery))
+                }
+            }
+        }
+     </script>
+</body>
+</html>

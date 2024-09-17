@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Filters</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for color circles */
+        .color-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+
+    <!-- 
+    
+    - add vertical scroll on stores and brands
+    - price range like asos
+    - color multi select
+    - show all selected as pills
+    - apply
+    - clear
+    - submit process
+    
+    -->
+
+    <div class="max-w-sm mx-auto bg-white p-4 rounded-lg shadow-md" x-data="getData()">
+
+        <!-- selected filters  -->
+        <div>
+            <span x-text="form.categories"></span>
+            <span x-text="form.stores"></span>
+            <span x-text="form.brands"></span>
+        </div>
+
+        <!-- Categories Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Categories'">Categories</button>
+            <div id="categories" x-show="activeAccordion=='Categories'" x-data="filterItems(filters.categories)">
+                <input type="text" id="categorySearch" x-model="filterQuery" placeholder="Search categories..." class="w-full mb-2 p-1 border rounded">
+                <div id="categoryList">
+                    <template x-for="(cat, idx) in filteredItems" :key="cat">
+                       <label class="block mb-1">
+                            <input type="checkbox" :value="cat" class="mr-2" x-model="form.categories"> <span x-text="cat"></span>
+                        </label> 
+                    </template>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Store Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Stores'">Stores</button>
+            <div id="stores" x-show="activeAccordion=='Stores'" x-data="filterItems(filters.stores)">
+                <input type="text" id="storeSearch" x-model="filterQuery" placeholder="Search stores..." class="w-full mb-2 p-1 border rounded">
+                <div id="storeList" class="max-h-48 overflow-y-scroll">
+                    <template x-for="(store, idx) in filteredItems" :key="store">
+                       <label class="block mb-1">
+                            <input type="checkbox" :value="store" class="mr-2" x-model="form.stores"> <span x-text="store"></span>
+                        </label> 
+                    </template>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Brands Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Brands'">Brands</button>
+            <div id="Brands" x-show="activeAccordion=='Brands'" x-data="filterItems(filters.brands)">
+                <input type="text" id="brandSearch" x-model="filterQuery" placeholder="Search brands..." class="w-full mb-2 p-1 border rounded">
+                <div id="brandList" class="max-h-48 overflow-y-scroll">
+                    <template x-for="(brand, idx) in filteredItems" :key="brand">
+                       <label class="block mb-1">
+                            <input type="checkbox" :value="brand" class="mr-2" x-model="form.brands"> <span x-text="brand"></span>
+                        </label> 
+                    </template>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Colors'">Colors</button>
+            <div id="colors" class="flex space-x-2 mb-2" x-show="activeAccordion=='Colors'">
+                <div class="color-circle bg-red-500" onclick="selectColor('Red')"></div>
+                <div class="color-circle bg-blue-500" onclick="selectColor('Blue')"></div>
+                <div class="color-circle bg-green-500" onclick="selectColor('Green')"></div>
+                <div class="color-circle bg-yellow-500" onclick="selectColor('Yellow')"></div>
+            </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Price'">Price Range</button>
+            <div id="price" x-show="activeAccordion=='Price'">
+                <input type="range" min="0" max="1000" step="50" class="w-full" id="priceRange">
+                <div id="priceValue" class="text-right text-sm mt-1">$0 - $1000</div>
+            </div>
+        </div>
+
+        <!-- In Stock Filter -->
+        <div>
+            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Stock'">Stock Status</button>
+            <div id="stock" x-show="activeAccordion=='Stock'">
+                <label class="block mb-1">
+                    <input type="radio" name="stock" class="mr-2"> In Stock
+                </label>
+                <label class="block mb-1">
+                    <input type="radio" name="stock" class="mr-2"> Out of Stock
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Only one accordion open at a time
+        function toggleAccordion(openId) {
+            const accordions = ['categories', 'store', 'brands', 'colors', 'price', 'stock'];
+            accordions.forEach(id => {
+                const element = document.getElementById(id);
+                if (id === openId) {
+                    element.classList.toggle('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        // Handle color selection
+        function selectColor(color) {
+            alert(`Color selected: ${color}`);
+        }
+
+        // Handle price range input
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        priceRange.addEventListener('input', function() {
+            priceValue.textContent = `$0 - $${priceRange.value}`;
+        });
+
+        // Filter categories based on search input
+        function filterCategories() {
+            const input = document.getElementById('categorySearch').value.toLowerCase();
+            const categoryList = document.getElementById('categoryList');
+            const labels = categoryList.getElementsByTagName('label');
+
+            for (let i = 0; i < labels.length; i++) {
+                const label = labels[i];
+                const text = label.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    label.style.display = "";
+                } else {
+                    label.style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <script>
+        function getData() {
+            return {
+                activeAccordion: 'Categories',
+                filters: {
+                    categories: ['Electronics', 'Computers', 'Kitchen', 'Outdoors', 'Furnitures', 'Toys', 'Video Games'],
+                    stores: ['Amazon', 'Ebay', 'Argos', 'Currys', 'John Lewis', 'Asos', 'Topman', 'Sports Direct', 'USC', 'JD Sports', 'Boohoo', 'Nike', 'Adidas', 'Asics', 'Puma', 'Mango', 'Temu', 'Aliexpress', 'Shein'],
+                    brands: ['Nike', 'Adidas', 'Puma', 'Umbro', 'Asos', 'Asics', 'Under Armour', 'Boss', 'Armani', 'Champions', 'Soviet', 'Jack and Jones', 'Jack Wills', 'Lacoste', 'Zara', 'River Island', 'Romans']
+                },
+                form: {
+                    categories: [],
+                    stores: [],
+                    brands: []
+                }
+            }
+        }
+
+        function filterItems(items) {
+            return {
+                filterQuery: '',
+                get filteredItems() {
+                    if(this.filterQuery.length == 0) return items;
+                    return items.filter( item => item.toLowerCase().includes(this.filterQuery))
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
