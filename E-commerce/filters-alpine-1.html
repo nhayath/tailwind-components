@@ -14,6 +14,33 @@
             cursor: pointer;
         }
     </style>
+    <style>
+ /* Slider Track */
+ .slider-track {
+            width: 100%;
+            height: 10px;
+            background-color: #808080;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        /* Slider Thumb */
+        .slider-thumb {
+            width: 24px;
+            height: 24px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        /* Hidden input fields */
+        input[type="number"] {
+            display: none;
+        }
+    </style>
      <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
@@ -21,9 +48,9 @@
 
     <!-- 
     
-    - add vertical scroll on stores and brands
+    x add vertical scroll on stores and brands
     - price range like asos
-    - color multi select
+    x color multi select
     - show all selected as pills
     - apply
     - clear
@@ -38,6 +65,11 @@
             <span x-text="form.categories"></span>
             <span x-text="form.stores"></span>
             <span x-text="form.brands"></span>
+            <span x-text="form.colors"></span>
+            <span x-text="'Min: ' + form.price.min + ', Max: ' + form.price.max"></span>
+            <span x-text="'In Stock: ' + form.stock"></span>
+
+            <button type="button border bg-black-500 text-white" @click="getFilteredData()">Apply</button>
         </div>
 
         <!-- Categories Filter -->
@@ -92,19 +124,39 @@
         <div>
             <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Colors'">Colors</button>
             <div id="colors" class="flex space-x-2 mb-2" x-show="activeAccordion=='Colors'">
-                <div class="color-circle bg-red-500" onclick="selectColor('Red')"></div>
-                <div class="color-circle bg-blue-500" onclick="selectColor('Blue')"></div>
-                <div class="color-circle bg-green-500" onclick="selectColor('Green')"></div>
-                <div class="color-circle bg-yellow-500" onclick="selectColor('Yellow')"></div>
+                <template x-for="(color, index) in filters.colors" :key="index">
+                    <div
+                        @click="toggleColor(color)"
+                        :style="{ backgroundColor: color }"
+                        class="w-6 h-6 rounded-full cursor-pointer transition-all duration-200 ease-in-out"
+                        :class="isSelected(color) ? 'ring-2 ring-blue-500' : ''"
+                    ></div>
+                </template>
             </div>
         </div>
 
         <!-- Price Range Filter -->
         <div>
-            <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Price'">Price Range</button>
+            <button class="w-full text-left font-semibold" @click="toggleAccordion('Price')">Price Range</button>
             <div id="price" x-show="activeAccordion=='Price'">
-                <input type="range" min="0" max="1000" step="50" class="w-full" id="priceRange">
-                <div id="priceValue" class="text-right text-sm mt-1">$0 - $1000</div>
+                <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full" x-data="priceRangeSlider(filters.price.min, filters.price.max)">
+                    <div class="flex justify-between items-center mb-4">
+                        <span x-text="'£' + minValue" class="text-xl"></span>
+                        <span x-text="'£' + maxValue" class="text-xl"></span>
+                    </div>
+            
+                    <!-- Custom Slider -->
+                    <div class="relative" x-ref="sliderTrack">
+                        <div class="slider-track"></div>
+                        <div class="slider-thumb" :style="{ left: minThumbPosition + '%' }" @mousedown="startDrag('min')"></div>
+                        <div class="slider-thumb" :style="{ left: maxThumbPosition + '%' }" @mousedown="startDrag('max')"></div>
+                    </div>
+            
+                    <!-- Hidden inputs to store values -->
+                    <input type="number" x-modelable="form.price.min" x-model="minValue">
+                    <input type="number" x-modelable="form.price.max" x-model="maxValue">
+                </div>
+               
             </div>
         </div>
 
@@ -113,72 +165,59 @@
             <button class="w-full text-left font-semibold mb-2" @click="activeAccordion = 'Stock'">Stock Status</button>
             <div id="stock" x-show="activeAccordion=='Stock'">
                 <label class="block mb-1">
-                    <input type="radio" name="stock" class="mr-2"> In Stock
+                    <input type="radio" name="stock" class="mr-2" value="y" x-model="form.stock"> In Stock
                 </label>
                 <label class="block mb-1">
-                    <input type="radio" name="stock" class="mr-2"> Out of Stock
+                    <input type="radio" name="stock" class="mr-2" value="n" x-model="form.stock"> Out of Stock
                 </label>
             </div>
         </div>
     </div>
 
-    <script>
-        // Only one accordion open at a time
-        function toggleAccordion(openId) {
-            const accordions = ['categories', 'store', 'brands', 'colors', 'price', 'stock'];
-            accordions.forEach(id => {
-                const element = document.getElementById(id);
-                if (id === openId) {
-                    element.classList.toggle('hidden');
-                } else {
-                    element.classList.add('hidden');
-                }
-            });
-        }
-
-        // Handle color selection
-        function selectColor(color) {
-            alert(`Color selected: ${color}`);
-        }
-
-        // Handle price range input
-        const priceRange = document.getElementById('priceRange');
-        const priceValue = document.getElementById('priceValue');
-        priceRange.addEventListener('input', function() {
-            priceValue.textContent = `$0 - $${priceRange.value}`;
-        });
-
-        // Filter categories based on search input
-        function filterCategories() {
-            const input = document.getElementById('categorySearch').value.toLowerCase();
-            const categoryList = document.getElementById('categoryList');
-            const labels = categoryList.getElementsByTagName('label');
-
-            for (let i = 0; i < labels.length; i++) {
-                const label = labels[i];
-                const text = label.textContent.toLowerCase();
-                if (text.includes(input)) {
-                    label.style.display = "";
-                } else {
-                    label.style.display = "none";
-                }
-            }
-        }
-    </script>
 
     <script>
         function getData() {
             return {
-                activeAccordion: 'Categories',
+                activeAccordion: 'Stock',
                 filters: {
                     categories: ['Electronics', 'Computers', 'Kitchen', 'Outdoors', 'Furnitures', 'Toys', 'Video Games'],
                     stores: ['Amazon', 'Ebay', 'Argos', 'Currys', 'John Lewis', 'Asos', 'Topman', 'Sports Direct', 'USC', 'JD Sports', 'Boohoo', 'Nike', 'Adidas', 'Asics', 'Puma', 'Mango', 'Temu', 'Aliexpress', 'Shein'],
-                    brands: ['Nike', 'Adidas', 'Puma', 'Umbro', 'Asos', 'Asics', 'Under Armour', 'Boss', 'Armani', 'Champions', 'Soviet', 'Jack and Jones', 'Jack Wills', 'Lacoste', 'Zara', 'River Island', 'Romans']
+                    brands: ['Nike', 'Adidas', 'Puma', 'Umbro', 'Asos', 'Asics', 'Under Armour', 'Boss', 'Armani', 'Champions', 'Soviet', 'Jack and Jones', 'Jack Wills', 'Lacoste', 'Zara', 'River Island', 'Romans'],
+                    colors: ['Red', 'Blue', 'Green', 'Pink', 'Orange'],
+                    price: {
+                        min: 0,
+                        max: 1000,
+                    }
                 },
                 form: {
                     categories: [],
                     stores: [],
-                    brands: []
+                    brands: [],
+                    colors: [],
+                    price: {
+                        min: 0,
+                        max: 0
+                    },
+                    stock: ''
+                },
+
+                toggleAccordion(currentAccordion) {
+                    this.activeAccordion = currentAccordion;
+                },
+                toggleColor(color) {
+                    if (this.form.colors.includes(color)) {
+                        this.form.colors = this.form.colors.filter(c => c !== color);
+                    } else {
+                        this.form.colors.push(color);
+                    }
+                },
+
+                isSelected(color) {
+                    return this.form.colors.includes(color);
+                },
+
+                getFilteredData() {
+                    console.log(this.form)
                 }
             }
         }
@@ -189,6 +228,76 @@
                 get filteredItems() {
                     if(this.filterQuery.length == 0) return items;
                     return items.filter( item => item.toLowerCase().includes(this.filterQuery))
+                }
+            }
+        }
+
+        function priceRangeSlider(min=0, max=1000) {
+            return {
+                minValue: min,
+                maxValue: max,
+                minThumbPosition: 0,
+                maxThumbPosition: 100,
+                sliderWidth: null,
+                isDraggingMin: false,
+                isDraggingMax: false,
+
+                init() {
+
+                    this.calculateSliderWidth();
+
+                    // Recalculate slider width on window resize
+                    window.addEventListener('resize', this.calculateSliderWidth);
+        
+                    window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+                    window.addEventListener('mouseup', () => this.stopDrag());
+                     
+                },
+
+                calculateSliderWidth() {
+                    // Use $nextTick to make sure the width is calculated when the slider is fully visible
+                    this.$nextTick(() => {
+                        this.sliderWidth = this.$refs.sliderTrack.offsetWidth;
+                    });
+                },
+
+                startDrag(thumb) {
+                    if(this.sliderWidth === 0) {
+                        this.sliderWidth = this.$refs.sliderTrack.offsetWidth;
+                    }
+                    if (thumb === 'min') {
+                        this.isDraggingMin = true;
+                    } else {
+                        this.isDraggingMax = true;
+                    }
+                },
+
+                stopDrag() {
+                    this.isDraggingMin = false;
+                    this.isDraggingMax = false;
+                },
+
+                onMouseMove(e) {
+                    const rect = this.$refs.sliderTrack.getBoundingClientRect();
+                    let pos = e.clientX - rect.left;
+
+                    if (this.isDraggingMin) {
+                        if (pos < 0) pos = 0;
+                        if (pos > (this.maxThumbPosition * this.sliderWidth / 100) - 10) {
+                            pos = (this.maxThumbPosition * this.sliderWidth / 100) - 10;
+                        }
+                        this.minThumbPosition = (pos / this.sliderWidth) * 100;
+                        this.minValue = Math.round((pos / this.sliderWidth) * 1000);
+                    }
+
+                    if (this.isDraggingMax) {
+                        if (pos > this.sliderWidth) pos = this.sliderWidth;
+                        if (pos < (this.minThumbPosition * this.sliderWidth / 100) + 10) {
+                            pos = (this.minThumbPosition * this.sliderWidth / 100) + 10;
+                        }
+                        this.maxThumbPosition = (pos / this.sliderWidth) * 100;
+                        this.maxValue = Math.round((pos / this.sliderWidth) * 1000);
+                    }
                 }
             }
         }

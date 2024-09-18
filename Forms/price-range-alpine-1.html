@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" x-data="slider()">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Price Range Slider</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <style>
+        /* Slider Track */
+        .slider-track {
+            width: 100%;
+            height: 10px;
+            background-color: #808080;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        /* Slider Thumb */
+        .slider-thumb {
+            width: 24px;
+            height: 24px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        /* Hidden input fields */
+        input[type="number"] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div class="flex justify-between items-center mb-4">
+            <span x-text="'£' + minValue" class="text-xl"></span>
+            <span x-text="'£' + maxValue" class="text-xl"></span>
+        </div>
+
+        <!-- Custom Slider -->
+        <div class="relative" x-ref="sliderTrack">
+            <div class="slider-track"></div>
+            <div class="slider-thumb" :style="{ left: minThumbPosition + '%' }" @mousedown="startDrag('min')"></div>
+            <div class="slider-thumb" :style="{ left: maxThumbPosition + '%' }" @mousedown="startDrag('max')"></div>
+        </div>
+
+        <!-- Hidden inputs to store values -->
+        <input type="number" x-model="minValue">
+        <input type="number" x-model="maxValue">
+    </div>
+
+    <script>
+
+        function slider(min=0, max=1000) {
+            return {
+                minValue: min,
+                maxValue: max,
+                minThumbPosition: 0,
+                maxThumbPosition: 100,
+                sliderWidth: null,
+                isDraggingMin: false,
+                isDraggingMax: false,
+
+                init() {
+                    this.sliderWidth = this.$refs.sliderTrack.offsetWidth;
+                    window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+                    window.addEventListener('mouseup', () => this.stopDrag());
+                },
+
+                startDrag(thumb) {
+                    if (thumb === 'min') {
+                        this.isDraggingMin = true;
+                    } else {
+                        this.isDraggingMax = true;
+                    }
+                },
+
+                stopDrag() {
+                    this.isDraggingMin = false;
+                    this.isDraggingMax = false;
+                },
+
+                onMouseMove(e) {
+                    const rect = this.$refs.sliderTrack.getBoundingClientRect();
+                    let pos = e.clientX - rect.left;
+
+                    if (this.isDraggingMin) {
+                        if (pos < 0) pos = 0;
+                        if (pos > (this.maxThumbPosition * this.sliderWidth / 100) - 10) {
+                            pos = (this.maxThumbPosition * this.sliderWidth / 100) - 10;
+                        }
+                        this.minThumbPosition = (pos / this.sliderWidth) * 100;
+                        this.minValue = Math.round((pos / this.sliderWidth) * 1000);
+                    }
+
+                    if (this.isDraggingMax) {
+                        if (pos > this.sliderWidth) pos = this.sliderWidth;
+                        if (pos < (this.minThumbPosition * this.sliderWidth / 100) + 10) {
+                            pos = (this.minThumbPosition * this.sliderWidth / 100) + 10;
+                        }
+                        this.maxThumbPosition = (pos / this.sliderWidth) * 100;
+                        this.maxValue = Math.round((pos / this.sliderWidth) * 1000);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
