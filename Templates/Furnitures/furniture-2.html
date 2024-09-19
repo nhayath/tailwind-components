@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chair & Sofa Deals</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hover-grow:hover { transform: scale(1.05); transition: transform 0.2s ease-in-out; }
+    .slide-in { animation: slide-in 0.5s ease forwards; }
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800" x-data="{ openSearch: false }">
+
+<!-- Navbar -->
+<header class="border-b bg-white shadow relative">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <!-- Search Bar -->
+    <div class="flex items-center space-x-2" :class="{'w-full': openSearch}">
+      <div class="flex items-center bg-gray-100 border border-gray-300 rounded-md overflow-hidden w-full sm:w-64" :class="{'hidden sm:flex': !openSearch}">
+        <svg class="w-5 h-5 text-gray-500 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"></path></svg>
+        <input type="text" placeholder="Search for chairs, sofas..." class="px-4 py-2 bg-transparent focus:outline-none w-full" />
+      </div>
+      <svg @click="openSearch = !openSearch" class="w-6 h-6 cursor-pointer sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"></path></svg>
+      <!-- Mobile Search Box -->
+      <div x-show="openSearch" class="absolute inset-0 bg-white flex items-center justify-center w-full sm:hidden left-0 right-0" x-cloak>
+        <div class="relative w-full max-w-lg">
+          <input type="text" placeholder="Search for chairs, sofas..." class="px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none" />
+          <svg @click="openSearch = false" class="absolute right-2 top-2 w-6 h-6 text-gray-500 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="text-2xl font-bold text-center">
+      <a href="#">🛋️ Chair & Sofa Deals</a>
+    </div>
+
+    <!-- Icons: Favourites & Sign In -->
+    <div class="flex items-center space-x-4">
+      <a href="#" class="flex items-center space-x-1 hover:text-indigo-500 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.121 19.121l7.071 7.071 7.071-7.071a5.007 5.007 0 00-7.071-7.071L12 5.343l-1.121 1.121a5.007 5.007 0 00-7.071 7.071z"></path></svg>
+      </a>
+      <a href="#" class="flex items-center space-x-1 hover:text-indigo-500 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 8h14M5 12h14m-7 4h7"></path></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Popular Chair & Sofa Types (Secondary Menu) -->
+<div class="bg-gray-100 py-2 border-b">
+  <div class="container mx-auto px-4 flex overflow-x-auto space-x-4 text-gray-600 text-sm font-semibold">
+    <a href="#" class="hover:text-indigo-500 transition-colors">Sofas</a>
+    <a href="#" class="hover:text-indigo-500 transition-colors">Recliners</a>
+    <a href="#" class="hover:text-indigo-500 transition-colors">Armchairs</a>
+    <a href="#" class="hover:text-indigo-500 transition-colors">Love Seats</a>
+    <a href="#" class="hover:text-indigo-500 transition-colors">Sectionals</a>
+  </div>
+</div>
+
+<!-- Latest Voucher Codes and Deals (Horizontal Slider) -->
+<section class="my-8">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center mb-4 slide-in">Latest Voucher Codes & Deals</h2>
+    <div class="flex overflow-x-auto space-x-4">
+      <!-- Voucher Card -->
+      <div class="min-w-[200px] bg-white p-4 border shadow rounded hover-grow">
+        <h3 class="font-semibold">10% Off All Sofas</h3>
+        <p>Code: SOFA10</p>
+      </div>
+      <div class="min-w-[200px] bg-white p-4 border shadow rounded hover-grow">
+        <h3 class="font-semibold">Free Delivery on Chairs</h3>
+        <p>Code: FREEDEL</p>
+      </div>
+      <div class="min-w-[200px] bg-white p-4 border shadow rounded hover-grow">
+        <h3 class="font-semibold">25% Off Recliners</h3>
+        <p>Code: RELAX25</p>
+      </div>
+      <!-- Add more deals similarly -->
+    </div>
+  </div>
+</section>
+
+<!-- Popular Deals (Product Grid) -->
+<section class="my-8">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center mb-4 slide-in">Popular Deals</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <!-- Product Card -->
+      <div class="bg-white p-4 border shadow rounded hover-grow">
+        <div class="relative">
+          <img src="https://via.placeholder.com/150" alt="Product" class="w-full h-auto rounded">
+          <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded">Sale</span>
+        </div>
+        <h3 class="mt-2 font-semibold">Comfort Recliner</h3>
+        <p class="text-gray-500 line-through">£400</p>
+        <p class="text-lg font-bold">£299</p>
+      </div>
+      <!-- Repeat for more products (10 products total) -->
+    </div>
+  </div>
+</section>
+
+<!-- Featured Stores Section -->
+<section class="my-8 bg-gray-100 py-8">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center mb-4">Featured Stores</h2>
+    <div class="flex justify-center space-x-8">
+      <img src="https://via.placeholder.com/100x50" alt="Store 1" class="hover-grow">
+      <img src="https://via.placeholder.com/100x50" alt="Store 2" class="hover-grow">
+      <img src="https://via.placeholder.com/100x50" alt="Store 3" class="hover-grow">
+      <!-- Add more store logos -->
+    </div>
+  </div>
+</section>
+
+<!-- About Us Section -->
+<section class="my-8">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-2xl font-bold slide-in">About Us</h2>
+    <p class="mt-4 text-gray-600">We help you find the best sales and deals on chairs and sofas from top UK retailers. Our curated selection ensures you get the best value for your home comfort needs.</p>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-gray-900 py-6 text-center text-gray-400">
+  <p>&copy; 2024 Chair & Sofa Deals. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
