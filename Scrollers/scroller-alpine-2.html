@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horizontal Scroller</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto my-10" x-data="scroller" x-init="init()">
+    <!-- Scroller Container -->
+    <div class="relative">
+      <!-- Left Button -->
+      <button x-show="canScrollLeft"
+              @click="scrollLeft"
+              class="absolute left-0 z-10 bg-gray-800 text-white p-2 rounded-full"
+              style="top: 50%; transform: translateY(-50%);">
+        &#9664;
+      </button>
+      
+      <!-- Scrolling Content -->
+      <div class="overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide"
+           :class="isMobile ? 'scroll-native' : ''"
+           x-ref="scroller"
+           @scroll="checkScroll">
+        <div class="inline-block" style="width: 300px; height: 200px; background: #FF6B6B;"></div>
+        <div class="inline-block" style="width: 300px; height: 200px; background: #4ECDC4;"></div>
+        <div class="inline-block" style="width: 300px; height: 200px; background: #556270;"></div>
+        <div class="inline-block" style="width: 300px; height: 200px; background: #C7F464;"></div>
+        <div class="inline-block" style="width: 300px; height: 200px; background: #F6CD61;"></div>
+      </div>
+      
+      <!-- Right Button -->
+      <button x-show="canScrollRight"
+              @click="scrollRight"
+              class="absolute right-0 z-10 bg-gray-800 text-white p-2 rounded-full"
+              style="top: 50%; transform: translateY(-50%);">
+        &#9654;
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('scroller', () => ({
+        isMobile: false,
+        canScrollLeft: false,
+        canScrollRight: false,
+
+        init() {
+          this.updateScroller();
+          window.addEventListener('resize', this.updateScroller);
+        },
+
+        updateScroller() {
+          this.isMobile = window.innerWidth <= 768;
+          this.checkScroll();
+        },
+
+        checkScroll() {
+          const scroller = this.$refs.scroller;
+          this.canScrollLeft = scroller.scrollLeft > 0;
+          this.canScrollRight = scroller.scrollLeft < scroller.scrollWidth - scroller.clientWidth;
+        },
+
+        scrollLeft() {
+          const scroller = this.$refs.scroller;
+          scroller.scrollBy({ left: -scroller.clientWidth, behavior: 'smooth' });
+        },
+
+        scrollRight() {
+          const scroller = this.$refs.scroller;
+          scroller.scrollBy({ left: scroller.clientWidth, behavior: 'smooth' });
+        }
+      }));
+    });
+  </script>
+
+  <style>
+    /* Hide native scrollbars for desktop */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+  </style>
+</body>
+</html>

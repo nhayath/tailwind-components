@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.x.x/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="bg-white shadow-lg p-4" x-data="{ open: false, search: false }">
+    <div class="container mx-auto flex justify-between items-center">
+
+                <!-- Mobile Icons -->
+                <div class="flex items-center md:hidden space-x-4">
+                    <button @click="search = !search">
+                        <!-- Search Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6M4 11a7 7 0 1114 0a7 7 0 01-14 0z" />
+                        </svg>
+                    </button>
+                </div>
+        
+                <!-- Mobile Search Box -->
+                <div x-show="search" x-transition class="fixed inset-x-0 top-0 z-50 bg-white p-4 shadow-lg md:hidden">
+                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <input type="text" placeholder="Search..." class="flex-grow p-2 outline-none">
+                        <button @click="search = false" class="p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6M4 11a7 7 0 1114 0a7 7 0 01-14 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+        <!-- Logo -->
+        <div class="flex items-center">
+            <img src="https://via.placeholder.com/40" alt="Logo" class="w-10 h-10">
+        </div>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex md:items-center md:space-x-6">
+            <div class="relative">
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button @click="search = !search" class="p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6M4 11a7 7 0 1114 0a7 7 0 01-14 0z" />
+                        </svg>
+                    </button>
+                    <input x-transition type="text" placeholder="Search..." class="flex-grow p-2 outline-none transition-all duration-300">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <a href="#">
+                <!-- Favourites Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 20.364L12 14.485l6.879 5.879m0 0a1.5 1.5 0 002.121 0a1.5 1.5 0 000-2.121l-7-7a1.5 1.5 0 00-2.121 0l-7 7a1.5 1.5 0 000 2.121a1.5 1.5 0 002.121 0z" />
+                </svg>
+            </a>
+            <button @click="open = !open">
+                <!-- Menu Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="open" x-transition class="absolute top-16 inset-x-0 bg-white shadow-lg">
+        <ul class="space-y-4 p-4">
+            <li><a href="#" class="block text-gray-700 hover:text-blue-500">Category 1</a></li>
+            <li><a href="#" class="block text-gray-700 hover:text-blue-500">Category 2</a></li>
+            <li><a href="#" class="block text-gray-700 hover:text-blue-500">Category 3</a></li>
+            <li><a href="#" class="block text-gray-700 hover:text-blue-500">Category 4</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- categories -->
+<div class="container mx-auto p-6">
+    <h2 class="text-3xl font-bold mb-6 text-center">Shop by Category</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <!-- Category Card -->
+      <div class="relative group cursor-pointer">
+        <img class="w-full h-48 object-cover transition-transform transform group-hover:scale-110 duration-300" src="https://via.placeholder.com/300" alt="Chairs" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-transform transform group-hover:scale-110 duration-300">
+          <span class="text-white text-lg font-semibold group-hover:text-2xl transition-all duration-300">Chairs</span>
+        </div>
+      </div>
+      <!-- Category Card -->
+      <div class="relative group cursor-pointer">
+        <img class="w-full h-48 object-cover transition-transform transform group-hover:scale-110 duration-300" src="https://via.placeholder.com/300" alt="Sofas" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-transform transform group-hover:scale-110 duration-300">
+          <span class="text-white text-lg font-semibold group-hover:text-2xl transition-all duration-300">Sofas</span>
+        </div>
+      </div>
+      <!-- More category cards -->
+      <div class="relative group cursor-pointer">
+        <img class="w-full h-48 object-cover transition-transform transform group-hover:scale-110 duration-300" src="https://via.placeholder.com/300" alt="Recliners" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-transform transform group-hover:scale-110 duration-300">
+          <span class="text-white text-lg font-semibold group-hover:text-2xl transition-all duration-300">Recliners</span>
+        </div>
+      </div>
+      <div class="relative group cursor-pointer">
+        <img class="w-full h-48 object-cover transition-transform transform group-hover:scale-110 duration-300" src="https://via.placeholder.com/300" alt="Loveseats" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-transform transform group-hover:scale-110 duration-300">
+          <span class="text-white text-lg font-semibold group-hover:text-2xl transition-all duration-300">Loveseats</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Hidden Categories -->
+    <div id="hidden-categories" class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6 hidden">
+      <!-- Category Card -->
+      <div class="relative group cursor-pointer">
+        <img class="w-full h-48 object-cover transition-transform transform group-hover:scale-110 duration-300" src="https://via.placeholder.com/300" alt="Office Chairs" />
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-transform transform group-hover:scale-110 duration-300">
+          <span class="text-white text-lg font-semibold group-hover:text-2xl transition-all duration-300">Office Chairs</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- View All Button -->
+    <div class="flex justify-center mt-6">
+      <button id="view-all-btn" class="text-lg text-blue-500 hover:text-blue-700 flex items-center">
+        View All <svg class="ml-2 h-5 w-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    const viewAllBtn = document.getElementById('view-all-btn');
+    const hiddenCategories = document.getElementById('hidden-categories');
+    let isHidden = true;
+  
+    viewAllBtn.addEventListener('click', () => {
+      if (isHidden) {
+        hiddenCategories.classList.remove('hidden');
+        viewAllBtn.querySelector('svg').classList.add('rotate-180');
+      } else {
+        hiddenCategories.classList.add('hidden');
+        viewAllBtn.querySelector('svg').classList.remove('rotate-180');
+      }
+      isHidden = !isHidden;
+    });
+
+    function getCategories() {
+        return [
+        {
+      "name": "Armchair",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Recliner",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Lounge Chair",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Rocking Chair",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Dining Chair",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Office Chair",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Futon",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Chaise Lounge",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Sofa",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Loveseat",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Sectional Sofa",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Sleeper Sofa",
+      "image": "https://via.placeholder.com/150"
+    },
+    {
+      "name": "Modular Sofa",
+      "image": "https://via.placeholder.com/150"
+    }
+        ]
+    }
+  </script>
+  
+  
+
+</body>
+</html>

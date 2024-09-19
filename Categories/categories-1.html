@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.x.x/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- categories -->
+<div class="container mx-auto p-6" x-data="getCategories()">
+    <ul class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <template x-for="(cat, idx) in categories" :key="cat.name">
+        <li class="border" x-show="idx < 12 || showAll">
+            <div class="flex flex-col w-full items-center">
+                <img :src="cat.image" alt="" srcset="">
+                <span x-text="cat.name"></span>
+            </div>
+            
+        </li>
+        </template>
+    </ul>
+
+    <button type="button" class="border px-4 py-2 mt-4 bg-gray-500 text-white" @click="showAll = ! showAll">Show more</button>
+</div>
+  
+  <script>
+
+    function getCategories() {
+        return { 
+            showAll: false,
+            categories: [
+                {
+                "name": "Armchair",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Recliner",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Lounge Chair",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Rocking Chair",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Dining Chair",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Office Chair",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Futon",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Chaise Lounge",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Sofa",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Loveseat",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Sectional Sofa",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Sleeper Sofa",
+                "image": "https://via.placeholder.com/150"
+                },
+                {
+                "name": "Modular Sofa",
+                "image": "https://via.placeholder.com/150"
+                }
+            ]
+        }
+    }
+  </script>
+  
+  
+
+</body>
+</html>
