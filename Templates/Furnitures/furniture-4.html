@@ -9,6 +9,14 @@
 </head>
 <body>
 
+  <!-- 
+  - tabs
+  - catalog
+  - about us
+  - footer
+  - use color pallets
+  -->
+
 <!-- Navbar -->
 <nav class="bg-white shadow-lg p-4" x-data="{ open: false, search: false }">
     <div class="container mx-auto flex justify-between items-center">
@@ -92,6 +100,146 @@
     <a href="#" class="hover:text-indigo-500 transition-colors">Sectionals</a>
   </div>
 </div>
+
+<!-- tabs -->
+<div class="container mx-auto" x-data="{activeTab: 'deals', activeClass: 'text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500'}">
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center items-center justify-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" type="button" role="tab" aria-controls="deals" aria-selected="false" :class="activeTab == 'deals' ? activeClass : ''" @click="activeTab='deals'">Deals</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" type="button" role="tab" aria-selected="false" :class="activeTab == 'categories' ? activeClass : ''" @click="activeTab='categories'">All Categories</button>
+        </li>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" type="button" role="tab" aria-controls="settings" aria-selected="false" :class="activeTab == 'stores' ? activeClass : ''" @click="activeTab='stores'">Stores</button>
+        </li>
+        <li role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" type="button" role="tab" aria-controls="contacts" aria-selected="false" :class="activeTab == 'brands' ? activeClass : ''" @click="activeTab='brands'">Brands</button>
+        </li>
+    </ul>
+  </div>
+  <div id="default-tab-content">
+    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" role="tabpanel" aria-labelledby="profile-tab" x-show="activeTab=='deals'">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" role="tabpanel" aria-labelledby="dashboard-tab" x-show="activeTab=='categories'">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" role="tabpanel" aria-labelledby="settings-tab" x-show="activeTab=='stores'">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" role="tabpanel" aria-labelledby="contacts-tab" x-show="activeTab=='brands'">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getProducts() {
+    return {
+      products: [
+          {
+              "name": "Modern Chair",
+              "salePrice": 49.99,
+              "retailPrice": 99.99,
+              "discount": "50%",
+              "imageUrl": "https://m.media-amazon.com/images/I/31kSKWQ8-TL._MCnd_AC_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Wooden Table",
+              "salePrice": 99.99,
+              "retailPrice": 199.99,
+              "discount": "50%",
+              "imageUrl": "https://m.media-amazon.com/images/I/91rqL4yFi9S._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Elegant Sofa",
+              "salePrice": 299.99,
+              "retailPrice": 499.99,
+              "discount": "40%",
+              "imageUrl": "https://m.media-amazon.com/images/I/91ut5FdgrpL._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Dining Set",
+              "salePrice": 399.99,
+              "retailPrice": 699.99,
+              "discount": "43%",
+              "imageUrl": "https://m.media-amazon.com/images/I/91X7C66jM5L._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Office Desk",
+              "salePrice": 149.99,
+              "retailPrice": 299.99,
+              "discount": "50%",
+              "imageUrl": "https://m.media-amazon.com/images/I/81RwkJRyN1L._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Bookshelf",
+              "salePrice": 79.99,
+              "retailPrice": 129.99,
+              "discount": "38%",
+              "imageUrl": "https://m.media-amazon.com/images/I/614NJV8ZsDL._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Bed Frame",
+              "salePrice": 249.99,
+              "retailPrice": 399.99,
+              "discount": "37%",
+              "imageUrl": "https://m.media-amazon.com/images/I/61hE1Bo3BEL._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Wardrobe",
+              "salePrice": 299.99,
+              "retailPrice": 499.99,
+              "discount": "40%",
+              "imageUrl": "https://m.media-amazon.com/images/I/91rqL4yFi9S._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Coffee Table",
+              "salePrice": 59.99,
+              "retailPrice": 89.99,
+              "discount": "33%",
+              "imageUrl": "https://m.media-amazon.com/images/I/91X7C66jM5L._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Lounge Chair",
+              "salePrice": 89.99,
+              "retailPrice": 149.99,
+              "discount": "40%",
+              "imageUrl": "https://m.media-amazon.com/images/I/61ExnM9fd9L._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Nightstand",
+              "salePrice": 39.99,
+              "retailPrice": 59.99,
+              "discount": "33%",
+              "imageUrl": "https://m.media-amazon.com/images/I/613hHM-zJ-L._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          },
+          {
+              "name": "Ottoman",
+              "salePrice": 69.99,
+              "retailPrice": 99.99,
+              "discount": "30%",
+              "imageUrl": "https://m.media-amazon.com/images/I/61hE1Bo3BEL._AC_UL480_FMwebp_QL65_.jpg",
+              "productPage": "#"
+          }
+      ]
+
+    }
+  }
+</script>
 
 </body>
 </html>
