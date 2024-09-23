@@ -8,18 +8,39 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
+
+    <!-- 
+        - position button
+        - hide buttons on mobile
+        - enable default scrolling on mobile
+    -->
   <div class="container mx-auto">
-    <div class="relative px-4" x-data="scrollerData">
+    <div class="relative px-4 border border-red-300" x-data="scrollerData">
+
+        <!-- scroll container -->
         <ul id="scroller" class="flex gap-4 overflow-x-hidden my-6" x-ref="scroller">
             <template x-for="n in 20">
                 <li x-text="'item ' + n " class="flex shrink-0 h-32 w-32 bg-gray-500 items-center justify-center"></li>
             </template>
         </ul>
 
-        <div class="flex space-x-4">
-            <button type="button" x-show="showLeft" @click="scrollLeft" class="bg-gray-500 px-3 py-2">Left</button>
-            <button type="button" x-show="showRight" @click="scrollRight" class="bg-gray-500 px-3 py-2">Right</button>
-        </div>
+        <!-- Slider controls -->
+        <button type="button" x-show="showLeft" @click="scrollLeft" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-white-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span class="sr-only">Previous</span>
+            </span>
+        </button>
+        <button type="button" x-show="showRight" @click="scrollRight" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-white-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="sr-only">Next</span>
+            </span>
+        </button>
 
     </div>
   </div>
@@ -35,12 +56,12 @@
             scrollRight() {
                 const scroller = this.$refs.scroller;
                 // console.log(scroller.clientWidth)
-                scroller.scrollBy({ left: scroller.clientWidth, behavior: 'smooth' });
+                scroller.scrollBy({ left: 64, behavior: 'smooth' });
                 this.updateScrollPos()
             },
             scrollLeft() {
                 const scroller = this.$refs.scroller;
-                scroller.scrollBy({ left: -scroller.clientWidth, behavior: 'smooth' });
+                scroller.scrollBy({ left: -64, behavior: 'smooth' });
                 this.updateScrollPos()
             },
 
@@ -49,8 +70,8 @@
                     const scroller = this.$refs.scroller;
                     const scrollLeft = scroller.scrollLeft;
                     const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
-                    console.log('left: ', scroller.scrollLeft)
-                    console.log('maxScrollLeft: ', maxScrollLeft)
+                    // console.log('left: ', scroller.scrollLeft)
+                    // console.log('maxScrollLeft: ', maxScrollLeft)
 
                     this.showLeft = (scrollLeft > 0);
                     this.showRight = (scrollLeft < maxScrollLeft)

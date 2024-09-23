@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalog 1</title>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .line-clamp-3 {
             display: -webkit-box;
@@ -14,6 +14,27 @@
         }
         .h-18 {
             height: 4.5rem;
+        }
+
+        .pb-100pc {
+            padding-bottom: 100%;
+        }
+
+        .pg-image::after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .pg-image img {
+            max-width: 95%;
+            max-height: 95%;
         }
     </style>
 </head>
@@ -25,48 +46,53 @@
                 <template x-for="product in products">
                     <div class="border border-gray-200 rounded-md">
                         <!-- card header -->
-                        <div class="relative">
-                            <img src="https://via.placeholder.com/300x200" alt="Product Image" class="w-full h-auto">
-                            <span class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold py-1 px-2 rounded-full">
+                        <div class="relative p-2">
+                            <figure class="pg-image relative margin-0 line-height-0 h-0 w-full pb-100pc text-center">
+                                <img :src="product.imageUrl" alt="Product Image" class="absolute max-w-full max-h-full mx-auto my-auto left-0 right-0 top-0 bottom-0">
+                            </figure>
+                            <span class="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold py-1 px-2 rounded-full">
                                 Sale
                             </span>
                         </div>
                         <!-- card content -->
-                        <div class="px-2">
-                            <h2 class="h-18 text-gray-700 line-clamp-3 overflow-hidden text-ellipsis" x-text="product.name"></h2>
+                        <div class="px-3">
+                            <a class="h-18 text-gray-500 line-clamp-3 overflow-hidden text-ellipsis my-3" x-text="product.name" href="#"></a>
                             <!-- price -->
-                            <div class="flex items-center space-x-2">
-                                <span class="text-md font-semibold text-gray-900">$49.99</span>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="text-md font-semibold text-orange-600">$49.99</span>
                                 <span class="text-sm text-gray-500 line-through">$69.99</span>
                               </div>
+
+                            <!-- store -->
+                             <p class="text-gray-500 mb-3" x-text="product.store + ' Sale' "></p>
                         </div>
 
                         <!-- cared footer -->
-                         <div class="mt-4 pt-2 border-t border-gray-200">
+                         <div class="mt-4 py-3 px-2 border-t border-gray-200">
                             <div class="flex justify-between items-center text-gray-500 text-sm">
                                 <!-- Thumbs Up Icon -->
-                                <div class="flex items-center space-x-1">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <button class="flex items-center space-x-1 text-gray-400 hover:text-orange-500 focus:outline-none">
+                                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11c.889-.086 1.416-.543 2.156-1.057a22.323 22.323 0 0 0 3.958-5.084 1.6 1.6 0 0 1 .582-.628 1.549 1.549 0 0 1 1.466-.087c.205.095.388.233.537.406a1.64 1.64 0 0 1 .384 1.279l-1.388 4.114M7 11H4v6.5A1.5 1.5 0 0 0 5.5 19v0A1.5 1.5 0 0 0 7 17.5V11Zm6.5-1h4.915c.286 0 .372.014.626.15.254.135.472.332.637.572a1.874 1.874 0 0 1 .215 1.673l-2.098 6.4C17.538 19.52 17.368 20 16.12 20c-2.303 0-4.79-.943-6.67-1.475"/>
                                       </svg>
                                       
                                   <span>120</span>
-                                </div>
+                                </button>
                                 <!-- Comments Icon -->
-                                <div class="flex items-center space-x-1">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <button class="flex items-center space-x-1 text-gray-400 hover:text-orange-500 focus:outline-none">
+                                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10.5h.01m-4.01 0h.01M8 10.5h.01M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.6a1 1 0 0 0-.69.275l-2.866 2.723A.5.5 0 0 1 8 18.635V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
                                       </svg>
                                       
                                   <span>45</span>
-                                </div>
+                                </button>
                                 <!-- External Link Icon -->
-                                <div class="flex items-center space-x-1">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <button class="flex items-center space-x-1 text-gray-400 hover:text-orange-500 focus:outline-none">
+                                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15.141 6 5.518 4.95a1.05 1.05 0 0 1 0 1.549l-5.612 5.088m-6.154-3.214v1.615a.95.95 0 0 0 1.525.845l5.108-4.251a1.1 1.1 0 0 0 0-1.646l-5.108-4.251a.95.95 0 0 0-1.525.846v1.7c-3.312 0-6 2.979-6 6.654v1.329a.7.7 0 0 0 1.344.353 5.174 5.174 0 0 1 4.652-3.191l.004-.003Z"/>
                                       </svg>
                                       
-                                </div>
+                                </button>
                               </div>
                          </div>
                     </div>
@@ -85,23 +111,26 @@
                     "retailPrice": 99.99,
                     "discount": "50%",
                     "imageUrl": "https://m.media-amazon.com/images/I/31kSKWQ8-TL._MCnd_AC_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
-                    "name": "Wooden Table",
+                    "name": "Wooden Table Genuine Wood - Stell Gray",
                     "salePrice": 99.99,
                     "retailPrice": 199.99,
                     "discount": "50%",
                     "imageUrl": "https://m.media-amazon.com/images/I/91rqL4yFi9S._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "eBay"
                 },
                 {
-                    "name": "Elegant Sofa",
+                    "name": "Elegant Living Room Desk Chair, Ultrasoft Coushon - Light Cream",
                     "salePrice": 299.99,
                     "retailPrice": 499.99,
                     "discount": "40%",
                     "imageUrl": "https://m.media-amazon.com/images/I/91ut5FdgrpL._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Argos"
                 },
                 {
                     "name": "Dining Set",
@@ -109,7 +138,8 @@
                     "retailPrice": 699.99,
                     "discount": "43%",
                     "imageUrl": "https://m.media-amazon.com/images/I/91X7C66jM5L._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Ikea"
                 },
                 {
                     "name": "Office Desk",
@@ -117,7 +147,8 @@
                     "retailPrice": 299.99,
                     "discount": "50%",
                     "imageUrl": "https://m.media-amazon.com/images/I/81RwkJRyN1L._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
                     "name": "Bookshelf",
@@ -125,7 +156,8 @@
                     "retailPrice": 129.99,
                     "discount": "38%",
                     "imageUrl": "https://m.media-amazon.com/images/I/614NJV8ZsDL._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Currys"
                 },
                 {
                     "name": "Bed Frame",
@@ -133,7 +165,8 @@
                     "retailPrice": 399.99,
                     "discount": "37%",
                     "imageUrl": "https://m.media-amazon.com/images/I/61hE1Bo3BEL._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "John Lewis"
                 },
                 {
                     "name": "Wardrobe",
@@ -141,7 +174,8 @@
                     "retailPrice": 499.99,
                     "discount": "40%",
                     "imageUrl": "https://m.media-amazon.com/images/I/91rqL4yFi9S._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
                     "name": "Coffee Table",
@@ -149,7 +183,8 @@
                     "retailPrice": 89.99,
                     "discount": "33%",
                     "imageUrl": "https://m.media-amazon.com/images/I/91X7C66jM5L._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
                     "name": "Lounge Chair",
@@ -157,7 +192,8 @@
                     "retailPrice": 149.99,
                     "discount": "40%",
                     "imageUrl": "https://m.media-amazon.com/images/I/61ExnM9fd9L._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
                     "name": "Nightstand",
@@ -165,7 +201,8 @@
                     "retailPrice": 59.99,
                     "discount": "33%",
                     "imageUrl": "https://m.media-amazon.com/images/I/613hHM-zJ-L._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 },
                 {
                     "name": "Ottoman",
@@ -173,7 +210,8 @@
                     "retailPrice": 99.99,
                     "discount": "30%",
                     "imageUrl": "https://m.media-amazon.com/images/I/61hE1Bo3BEL._AC_UL480_FMwebp_QL65_.jpg",
-                    "productPage": "#"
+                    "productPage": "#",
+                    "store": "Amazon"
                 }
             ]
       
