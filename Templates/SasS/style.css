@@ -1,0 +1,911 @@
+/* --- Quantum Leap SaaS Template Stylesheet --- */
+
+/* ========= Variables & Basic Setup ========= */
+:root {
+    --color-primary-bg: #0a0f2e; /* Deep dark blue/purple */
+    --color-secondary-bg: #1a1f3e; /* Slightly lighter surface */
+    --color-accent-primary: #00f0ff; /* Vibrant Cyan/Teal */
+    --color-accent-secondary: #d900ff; /* Bright Magenta/Purple */
+    --color-text-primary: #e0e0ff; /* Light grey/off-white */
+    --color-text-secondary: #a0a0cc; /* Mid-grey */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-success: #00ffaa;
+    --color-error: #ff4d4d;
+
+    --font-primary: 'Poppins', sans-serif; /* Clean sans-serif for headings */
+    --font-secondary: 'Inter', sans-serif; /* Highly readable sans-serif for body */
+
+    --container-width: 1140px;
+    --section-padding: 80px 0;
+    --card-border-radius: 8px; /* Can be 0 for sharper edges */
+    --transition-speed: 0.3s;
+}
+
+/* Google Fonts Import (Example - Add to HTML <head> for better performance) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
+}
+
+body {
+    font-family: var(--font-secondary);
+    color: var(--color-text-primary);
+    background-color: var(--color-primary-bg);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.8em;
+    color: var(--color-white); /* Brighter white for headings */
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.1rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+}
+
+a {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: var(--color-white);
+}
+
+img, svg, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: 90%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.section-padding {
+    padding: var(--section-padding);
+}
+
+.alt-bg {
+    background-color: var(--color-secondary-bg);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--color-white);
+}
+
+.section-subtitle {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+}
+
+/* ========= Buttons ========= */
+.cta-button {
+    display: inline-block;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 50px; /* Pill shape */
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border: 2px solid transparent;
+    font-size: 1rem;
+}
+
+.cta-button.nav-cta {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* Primary Button Style */
+.cta-button {
+    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
+    color: var(--color-black); /* High contrast text on gradient */
+    box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); /* Subtle glow */
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 240, 255, 0.5);
+    color: var(--color-black);
+}
+
+/* Outline Button Style */
+.cta-button.outline {
+    background-color: transparent;
+    border: 2px solid var(--color-accent-primary);
+    color: var(--color-accent-primary);
+    box-shadow: none;
+}
+
+.cta-button.outline:hover {
+    background-color: var(--color-accent-primary);
+    color: var(--color-primary-bg);
+    box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+}
+
+/* Large CTA */
+.cta-button.large-cta {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+
+/* ========= Header & Navigation ========= */
+.site-header {
+    position: absolute; /* Or 'fixed' if you want it sticky */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    background: transparent; /* Make solid on scroll via JS if needed */
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* Add class via JS on scroll */
+.site-header.scrolled {
+    background-color: rgba(10, 15, 46, 0.9); /* Semi-transparent dark bg */
+    backdrop-filter: blur(10px);
+    position: fixed;
+    box-shadow: 0 2px 10px rgba(0,0,0, 0.3);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links li a {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-links li a::after { /* Subtle underline hover effect */
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary));
+    transition: width var(--transition-speed) ease;
+}
+
+.nav-links li a:hover {
+    color: var(--color-white);
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ========= Hero Section ========= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--color-white);
+    text-align: center;
+    padding-top: 120px; /* Adjust for header height */
+    padding-bottom: 60px;
+
+    /* --- !!! DIGITAL ART BACKGROUND !!! --- */
+    /* Replace 'digital-art-background.jpg' with your actual image */
+    background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=85') no-repeat center center/cover;
+    /* Consider adding subtle animation via JS (e.g., Particles.js) or a simple CSS keyframe animation */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(10, 15, 46, 0.6) 0%, rgba(10, 15, 46, 0.9) 100%); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Control content width */
+}
+
+.hero-headline {
+    font-size: 3.5rem; /* Larger for impact */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero-subheadline {
+    font-size: 1.25rem;
+    color: var(--color-text-primary); /* Lighter than default secondary text */
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-cta {
+    margin-top: 1rem;
+}
+
+.hero-social-proof {
+    margin-top: 3rem;
+    opacity: 0.8;
+}
+
+.hero-social-proof span {
+    display: block;
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+}
+
+.client-logo {
+    display: inline-block;
+    height: 25px; /* Adjust size */
+    width: auto;
+    margin: 0 15px;
+    filter: brightness(0.8) contrast(1.2); /* Adjust for visibility on dark bg */
+    vertical-align: middle;
+}
+
+/* ========= Features Section ========= */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 4rem;
+}
+
+.feature-item {
+    background-color: var(--color-secondary-bg);
+    padding: 30px;
+    border-radius: var(--card-border-radius);
+    text-align: center;
+    border: 1px solid rgba(0, 240, 255, 0.1); /* Subtle border */
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(10, 15, 46, 0.5), 0 0 15px rgba(0, 240, 255, 0.3); /* Lift and glow */
+}
+
+.feature-icon {
+    color: var(--color-accent-primary);
+    margin-bottom: 1.5rem;
+    /* Animation potential: Add subtle animation on hover/scroll */
+}
+.feature-icon i { /* Target FontAwesome icon */
+    font-size: 2.5rem; /* Adjust icon size */
+    transition: transform var(--transition-speed) ease;
+}
+.feature-item:hover .feature-icon i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-title {
+    color: var(--color-white);
+    margin-bottom: 0.5rem;
+}
+
+.feature-description {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ========= How It Works / Product Showcase ========= */
+.showcase-step {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 4rem;
+}
+
+.showcase-step.reverse {
+    flex-direction: row-reverse;
+}
+
+.showcase-text {
+    flex: 1;
+}
+
+.showcase-text h3 {
+    color: var(--color-accent-secondary); /* Use secondary accent */
+}
+
+.showcase-visual {
+    flex: 1.2; /* Give slightly more space to visual */
+    background-color: var(--color-primary-bg); /* Dark frame */
+    padding: 15px;
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 5px 20px rgba(0,0,0, 0.3);
+    border: 1px solid rgba(var(--color-accent-primary-rgb), 0.1); /* Add this after defining RGB */
+}
+
+/* Define RGB version for RGBA use */
+:root {
+    --color-accent-primary-rgb: 0, 240, 255;
+}
+.showcase-visual {
+     border: 1px solid rgba(var(--color-accent-primary-rgb), 0.1);
+}
+
+.showcase-visual img,
+.showcase-visual video { /* Style placeholder images/videos */
+    border-radius: calc(var(--card-border-radius) - 5px);
+}
+
+
+/* ========= Use Cases Section ========= */
+.use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 4rem;
+}
+
+.use-case-item {
+    background-color: transparent; /* Blend with section background */
+    padding: 20px;
+    text-align: center;
+    border-radius: var(--card-border-radius);
+    transition: background-color var(--transition-speed) ease;
+}
+
+.use-case-item:hover {
+    background-color: var(--color-secondary-bg); /* Highlight on hover */
+}
+
+.use-case-icon {
+    color: var(--color-accent-secondary); /* Use secondary accent for variety */
+    margin-bottom: 1rem;
+}
+.use-case-icon i {
+    font-size: 2.2rem;
+}
+
+.use-case-title {
+    color: var(--color-white);
+    margin-bottom: 0.5rem;
+}
+
+/* ========= Pricing Section ========= */
+.pricing-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+    gap: 15px;
+}
+
+.toggle-label {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+
+.toggle-label.active {
+    color: var(--color-accent-primary);
+    font-weight: 600;
+}
+
+/* Basic Switch Styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-primary-bg);
+  transition: var(--transition-speed);
+  border: 1px solid var(--color-accent-primary);
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--color-accent-primary);
+  transition: var(--transition-speed);
+}
+input:checked + .slider {
+  background-color: var(--color-primary-bg);
+}
+input:checked + .slider:before {
+  transform: translateX(24px);
+  background-color: var(--color-accent-secondary); /* Change color when toggled */
+}
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+/* --- End Switch --- */
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    align-items: stretch; /* Make cards equal height if needed */
+}
+
+.pricing-plan {
+    background-color: var(--color-secondary-bg);
+    padding: 35px;
+    border-radius: var(--card-border-radius);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden; /* For badge */
+}
+
+.pricing-plan:hover {
+    transform: translateY(-10px);
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 10px 30px rgba(10, 15, 46, 0.6);
+}
+
+/* Popular Plan Highlight */
+.pricing-plan.popular {
+    border-color: var(--color-accent-primary);
+    transform: scale(1.05); /* Make it slightly larger */
+    box-shadow: 0 15px 40px rgba(0, 240, 255, 0.2);
+    z-index: 10;
+}
+.pricing-plan.popular:hover {
+     transform: scale(1.05) translateY(-10px); /* Keep scale on hover */
+}
+
+.popular-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(45deg, var(--color-accent-primary), var(--color-accent-secondary));
+    color: var(--color-black);
+    padding: 5px 25px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transform: rotate(45deg) translate(28%, -50%);
+    transform-origin: top left;
+    width: 150px; /* Adjust as needed */
+    text-align: center;
+}
+
+
+.plan-name {
+    font-size: 1.7rem;
+    color: var(--color-white);
+    margin-bottom: 0.5rem;
+}
+
+.plan-description {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    min-height: 40px; /* Ensure space */
+    margin-bottom: 1.5rem;
+}
+
+.plan-price {
+    margin-bottom: 2rem;
+}
+
+.price-amount {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--color-white);
+}
+.price-amount ~ span {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-left: 5px;
+}
+.plan-price span.price-amount { /* Style 'Custom' text */
+    font-size: 1.8rem;
+    color: var(--color-accent-secondary);
+}
+
+.plan-features {
+    margin-bottom: 2.5rem;
+    flex-grow: 1; /* Pushes button to bottom */
+}
+
+.plan-features li {
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plan-features li i { /* Check/Times Icons */
+    width: 18px; /* Ensure alignment */
+    text-align: center;
+}
+.plan-features li .fa-check {
+    color: var(--color-success);
+}
+.plan-features li .fa-times {
+    color: var(--color-error);
+    opacity: 0.7;
+}
+
+.pricing-plan .cta-button {
+    width: 100%; /* Full width button in card */
+}
+
+/* Logic for showing annual prices (add .show-annual class via JS) */
+/* This is basic; real implementation needs JS to change text content */
+.pricing-plan .price-period.annual { display: none; }
+.show-annual .pricing-plan .price-period.monthly { display: none; }
+.show-annual .pricing-plan .price-period.annual { display: inline; }
+
+
+/* ========= Testimonials Section ========= */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 4rem;
+}
+
+.testimonial-item {
+    background-color: var(--color-secondary-bg);
+    padding: 30px;
+    border-radius: var(--card-border-radius);
+    border-left: 5px solid var(--color-accent-primary); /* Accent line */
+    font-style: italic;
+    color: var(--color-text-primary);
+}
+
+.testimonial-item p {
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    color: inherit; /* Override default p color */
+}
+
+.testimonial-item footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-style: normal;
+}
+
+.testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonial-name {
+    font-weight: 600;
+    color: var(--color-white);
+    display: block;
+}
+
+.testimonial-title {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+/* Client Logos */
+.client-logos-container {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+.client-logos-title {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.client-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.client-logo-dark {
+    height: 30px; /* Adjust size */
+    width: auto;
+    opacity: 0.6;
+    filter: grayscale(100%) brightness(1.5); /* Make them subtle */
+    transition: opacity var(--transition-speed) ease, filter var(--transition-speed) ease;
+}
+
+.client-logo-dark:hover {
+    opacity: 1;
+    filter: none;
+}
+
+/* ========= Secondary CTA Section ========= */
+.cta-bottom {
+    background: linear-gradient(rgba(10, 15, 46, 0.8), rgba(10, 15, 46, 0.9)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=85') no-repeat center center/cover; /* Example background */
+    background-attachment: fixed; /* Parallax effect */
+    text-align: center;
+}
+
+.cta-headline {
+    font-size: 2.5rem;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+}
+
+.cta-text {
+    color: var(--color-text-primary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+
+/* ========= Footer ========= */
+.site-footer {
+    background-color: var(--color-secondary-bg);
+    padding-top: 60px;
+    font-size: 0.9rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-column.about .footer-logo {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.footer-column h4 {
+    font-size: 1.1rem;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.7rem;
+}
+
+.footer-column ul li a {
+    color: var(--color-text-secondary);
+}
+
+.footer-column ul li a:hover {
+    color: var(--color-accent-primary);
+}
+
+.social-icons {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.social-icons a:hover {
+    color: var(--color-accent-primary);
+    transform: scale(1.2);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(var(--color-accent-primary-rgb), 0.1);
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Wrap on small screens */
+    gap: 10px;
+    color: var(--color-text-secondary);
+}
+
+.footer-legal-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-legal-links li a {
+    color: var(--color-text-secondary);
+}
+.footer-legal-links li a:hover {
+    color: var(--color-accent-primary);
+}
+
+
+/* ========= Responsiveness ========= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2rem; }
+    .hero-headline { font-size: 3rem; }
+
+    .features-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .pricing-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .pricing-plan.popular { transform: scale(1.02); } /* Slightly less pronounced */
+    .pricing-plan.popular:hover { transform: scale(1.02) translateY(-10px); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    html { font-size: 15px; } /* Slightly smaller base font */
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    .hero-headline { font-size: 2.5rem; }
+    .hero-subheadline { font-size: 1.1rem; }
+
+    .section-padding { padding: 60px 0; }
+
+    /* Mobile Navigation */
+    .menu-toggle {
+        display: block;
+        z-index: 1001; /* Above nav links */
+    }
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100vh;
+        background-color: var(--color-secondary-bg); /* Solid background for mobile nav */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+        padding-top: 60px; /* Space for close button if added */
+    }
+    .nav-links.active {
+        transform: translateX(0);
+    }
+    .nav-links li a {
+        font-size: 1.2rem;
+    }
+    .navbar .cta-button.nav-cta {
+        display: none; /* Hide separate CTA in mobile nav bar, maybe add to slide-out menu */
+    }
+
+    .features-grid,
+    .use-cases-grid,
+    .pricing-grid,
+    .testimonials-grid {
+        grid-template-columns: 1fr; /* Stack items */
+        gap: 25px;
+    }
+    .pricing-plan.popular { transform: scale(1); } /* Reset scale */
+     .pricing-plan.popular:hover { transform: translateY(-10px); }
+
+
+    .showcase-step,
+    .showcase-step.reverse {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr; /* Stack footer columns */
+        text-align: center;
+    }
+    .footer-column.about {
+        grid-row: 1; /* Ensure about section is first */
+    }
+    .social-icons {
+        justify-content: center;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+     .footer-legal-links {
+        justify-content: center;
+    }
+}
+
+
+/* ========= AOS Animation Defaults (Optional) ========= */
+/* Make elements initially invisible if needed, AOS usually handles this */
+[data-aos] {
+  /* opacity: 0; */
+  /* transform: translateY(20px); */
+  transition-property: transform, opacity;
+}
+
+/* You can add more specific default overrides for AOS if desired */
+
+
+/* ========= Utility Classes ========= */
+.text-center { text-align: center; }
+.margin-top-sm { margin-top: 1rem; }
+.margin-top-md { margin-top: 2rem; }
+.margin-top-lg { margin-top: 4rem; }
+/* Add more as needed */

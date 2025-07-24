@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics Category - DealFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            html { color-scheme: dark; }
+        }
+        @media (min-width: 769px) {
+            html { color-scheme: light; }
+        }
+        
+        /* Custom range slider styles */
+        .range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+
+
+    <!-- Mobile Filter Overlay -->
+    <div id="mobileFilterOverlay" class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden">
+        <!-- Main Filter Menu -->
+        <div id="mainFilterMenu" class="fixed right-0 top-0 h-full w-full bg-white dark:bg-gray-900 transform transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold">Filters</h2>
+                <button id="closeMobileFilter" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 space-y-4">
+                <button class="filter-category-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-category="stores">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-store text-primary-600"></i>
+                        <span>Stores</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+                
+                <button class="filter-category-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-category="brands">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-tags text-primary-600"></i>
+                        <span>Brands</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+                
+                <button class="filter-category-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-category="price">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-pound-sign text-primary-600"></i>
+                        <span>Price Range</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+                
+                <button class="filter-category-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-category="types">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-list text-primary-600"></i>
+                        <span>Product Types</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+                
+                <button class="filter-category-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-category="discount">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-percentage text-primary-600"></i>
+                        <span>Discount Range</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </button>
+            </div>
+            
+            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                <div class="flex space-x-3">
+                    <button id="resetMobileFilters" class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 rounded-lg font-medium">
+                        Reset All
+                    </button>
+                    <button id="applyMobileFilters" class="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sub Filter Menus -->
+        <div id="subFilterMenu" class="fixed right-0 top-0 h-full w-full bg-white dark:bg-gray-900 transform translate-x-full transition-transform duration-300">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-3">
+                    <button id="backToMainFilter" class="text-primary-600 hover:text-primary-700">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2 id="subFilterTitle" class="text-lg font-semibold">Filter Category</h2>
+                </div>
+            </div>
+            
+            <div id="subFilterContent" class="p-4 pb-20 overflow-y-auto h-full">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="flex">
+        <!-- Desktop Sidebar Filters -->
+        <aside class="hidden lg:block w-80 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-screen sticky top-0 overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold">Filters</h2>
+                    <button id="resetDesktopFilters" class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+                        Reset All
+                    </button>
+                </div>
+                
+                <!-- Stores Filter -->
+                <div class="mb-6">
+                    <button class="accordion-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-target="storesAccordion">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-store text-primary-600"></i>
+                            <span class="font-medium">Stores</span>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="storesAccordion" class="accordion-content mt-3 space-y-2 hidden">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="store-filter" value="amazon" data-label="Amazon">
+                            <span class="text-sm">Amazon</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="store-filter" value="currys" data-label="Currys">
+                            <span class="text-sm">Currys</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="store-filter" value="argos" data-label="Argos">
+                            <span class="text-sm">Argos</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="store-filter" value="john-lewis" data-label="John Lewis">
+                            <span class="text-sm">John Lewis</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="store-filter" value="very" data-label="Very">
+                            <span class="text-sm">Very</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Brands Filter -->
+                <div class="mb-6">
+                    <button class="accordion-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-target="brandsAccordion">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-tags text-primary-600"></i>
+                            <span class="font-medium">Brands</span>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="brandsAccordion" class="accordion-content mt-3 space-y-2 hidden">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="brand-filter" value="apple" data-label="Apple">
+                            <span class="text-sm">Apple</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="brand-filter" value="samsung" data-label="Samsung">
+                            <span class="text-sm">Samsung</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="brand-filter" value="sony" data-label="Sony">
+                            <span class="text-sm">Sony</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="brand-filter" value="lg" data-label="LG">
+                            <span class="text-sm">LG</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="brand-filter" value="dell" data-label="Dell">
+                            <span class="text-sm">Dell</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Price Range Filter -->
+                <div class="mb-6">
+                    <button class="accordion-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-target="priceAccordion">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-pound-sign text-primary-600"></i>
+                            <span class="font-medium">Price Range</span>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="priceAccordion" class="accordion-content mt-3 hidden">
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                                <span>Max Price</span>
+                                <span id="priceValue">£1000</span>
+                            </div>
+                            <input type="range" id="priceRange" class="range-slider w-full" min="0" max="2000" value="1000" step="50">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>£0</span>
+                                <span>£2000+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Types Filter -->
+                <div class="mb-6">
+                    <button class="accordion-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-target="typesAccordion">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-list text-primary-600"></i>
+                            <span class="font-medium">Product Types</span>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="typesAccordion" class="accordion-content mt-3 space-y-2 hidden">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="type-filter" value="gaming" data-label="Gaming">
+                            <span class="text-sm">Gaming</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="type-filter" value="ultrabook" data-label="Ultrabook">
+                            <span class="text-sm">Ultrabook</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="type-filter" value="smartphone" data-label="Smartphone">
+                            <span class="text-sm">Smartphone</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="type-filter" value="tablet" data-label="Tablet">
+                            <span class="text-sm">Tablet</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="type-filter" value="headphones" data-label="Headphones">
+                            <span class="text-sm">Headphones</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Discount Range Filter -->
+                <div class="mb-6">
+                    <button class="accordion-btn w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" data-target="discountAccordion">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-percentage text-primary-600"></i>
+                            <span class="font-medium">Discount Range</span>
+                        </div>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div id="discountAccordion" class="accordion-content mt-3 hidden">
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                                <span>Min Discount</span>
+                                <span id="discountValue">10%</span>
+                            </div>
+                            <input type="range" id="discountRange" class="range-slider w-full" min="0" max="80" value="10" step="5">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>0%</span>
+                                <span>80%+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-6">
+            <!-- Results Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold mb-2">Electronics Deals</h1>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            <span id="resultsCount">24</span> deals found
+                        </p>
+                    </div>
+                    
+                    <!-- Desktop Sort Dropdown -->
+                    <div class="relative hidden lg:block">
+                        <select id="sortSelect" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                            <option value="hotness">Sort by Hotness</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="discount">Highest Discount</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Active Filters -->
+                <div id="activeFilters" class="flex flex-wrap gap-2 hidden">
+                    <!-- Active filter tags will be inserted here -->
+                </div>
+            </div>
+            
+            <!-- Mobile Controls -->
+            <div class="lg:hidden mb-4">
+                <div class="flex items-center space-x-3">
+                    <!-- Mobile Sort Dropdown -->
+                    <div class="flex-1">
+                        <select id="mobileSortSelect" class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                            <option value="hotness">Sort by Hotness</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="discount">Highest Discount</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Mobile Filter Button -->
+                    <button id="mobileFilterBtn" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 whitespace-nowrap">
+                        <i class="fas fa-filter"></i>
+                        <span>Filters</span>
+                        <span id="activeFiltersCount" class="bg-white text-primary-600 px-2 py-1 rounded-full text-xs font-bold hidden">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product cards will be dynamically inserted here -->
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden text-center py-12">
+                <i class="fas fa-spinner fa-spin text-3xl text-primary-600 mb-4"></i>
+                <p class="text-gray-600 dark:text-gray-400">Loading deals...</p>
+            </div>
+            
+            <!-- No Results State -->
+            <div id="noResultsState" class="hidden text-center py-12">
+                <i class="fas fa-search text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">No deals found</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your filters to see more results.</p>
+                <button id="clearAllFilters" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg">
+                    Clear All Filters
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                title: "iPhone 15 Pro Max 256GB",
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=300&h=300&fit=crop",
+                currentPrice: 999,
+                originalPrice: 1199,
+                store: "Amazon",
+                brand: "apple",
+                type: "smartphone",
+                hotness: 256,
+                comments: 42,
+                discount: 17
+            },
+            {
+                id: 2,
+                title: "Samsung Galaxy S24 Ultra",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=300&h=300&fit=crop",
+                currentPrice: 849,
+                originalPrice: 1049,
+                store: "Currys",
+                brand: "samsung",
+                type: "smartphone",
+                hotness: 189,
+                comments: 28,
+                discount: 19
+            },
+            {
+                id: 3,
+                title: "MacBook Air M3 13-inch",
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=300&h=300&fit=crop",
+                currentPrice: 1099,
+                originalPrice: 1299,
+                store: "John Lewis",
+                brand: "apple",
+                type: "ultrabook",
+                hotness: 342,
+                comments: 67,
+                discount: 15
+            },
+            {
+                id: 4,
+                title: "Sony WH-1000XM5 Headphones",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop",
+                currentPrice: 279,
+                originalPrice: 379,
+                store: "Argos",
+                brand: "sony",
+                type: "headphones",
+                hotness: 156,
+                comments: 23,
+                discount: 26
+            },
+            {
+                id: 5,
+                title: "Dell XPS 13 Plus",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=300&fit=crop",
+                currentPrice: 899,
+                originalPrice: 1199,
+                store: "Very",
+                brand: "dell",
+                type: "ultrabook",
+                hotness: 98,
+                comments: 15,
+                discount: 25
+            },
+            {
+                id: 6,
+                title: "iPad Pro 12.9-inch M2",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=300&h=300&fit=crop",
+                currentPrice: 999,
+                originalPrice: 1199,
+                store: "Amazon",
+                brand: "apple",
+                type: "tablet",
+                hotness: 234,
+                comments: 38,
+                discount: 17
+            },
+            {
+                id: 7,
+                title: "LG OLED C3 55-inch TV",
+                image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300&h=300&fit=crop",
+                currentPrice: 1299,
+                originalPrice: 1799,
+                store: "Currys",
+                brand: "lg",
+                type: "gaming",
+                hotness: 445,
+                comments: 89,
+                discount: 28
+            },
+            {
+                id: 8,
+                title: "Samsung Galaxy Tab S9+",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=300&h=300&fit=crop",
+                currentPrice: 699,
+                originalPrice: 899,
+                store: "John Lewis",
+                brand: "samsung",
+                type: "tablet",
+                hotness: 167,
+                comments: 31,
+                discount: 22
+            }
+        ];
+
+        // Filter state
+        let currentFilters = {
+            stores: [],
+            brands: [],
+            types: [],
+            maxPrice: 2000,
+            minDiscount: 0
+        };
+
+        let currentSort = 'hotness';
+        let filteredProducts = [...products];
+
+        // DOM elements
+        const productGrid = document.getElementById('productGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        const activeFilters = document.getElementById('activeFilters');
+        const loadingState = document.getElementById('loadingState');
+        const noResultsState = document.getElementById('noResultsState');
+        const sortSelect = document.getElementById('sortSelect');
+        const mobileSortSelect = document.getElementById('mobileSortSelect');
+
+        // Mobile filter elements
+        const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+        const mobileFilterOverlay = document.getElementById('mobileFilterOverlay');
+        const mainFilterMenu = document.getElementById('mainFilterMenu');
+        const subFilterMenu = document.getElementById('subFilterMenu');
+        const closeMobileFilter = document.getElementById('closeMobileFilter');
+        const backToMainFilter = document.getElementById('backToMainFilter');
+        const subFilterTitle = document.getElementById('subFilterTitle');
+        const subFilterContent = document.getElementById('subFilterContent');
+        const activeFiltersCount = document.getElementById('activeFiltersCount');
+
+        // Initialize the page
+        function init() {
+            setupEventListeners();
+            updatePriceSlider();
+            updateDiscountSlider();
+            renderProducts();
+            updateActiveFilters();
+            updateURL();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Desktop accordion functionality
+            document.querySelectorAll('.accordion-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    const icon = btn.querySelector('.fas.fa-chevron-down');
+                    
+                    if (target.classList.contains('hidden')) {
+                        target.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        target.classList.add('hidden');
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Filter change listeners
+            document.querySelectorAll('.store-filter, .brand-filter, .type-filter').forEach(checkbox => {
+                checkbox.addEventListener('change', handleFilterChange);
+            });
+
+            // Range sliders
+            document.getElementById('priceRange').addEventListener('input', handlePriceChange);
+            document.getElementById('discountRange').addEventListener('input', handleDiscountChange);
+
+            // Sort dropdowns
+            sortSelect.addEventListener('change', handleSortChange);
+            mobileSortSelect.addEventListener('change', handleMobileSortChange);
+
+            // Reset buttons
+            document.getElementById('resetDesktopFilters').addEventListener('click', resetAllFilters);
+            document.getElementById('clearAllFilters').addEventListener('click', resetAllFilters);
+
+            // Mobile filter functionality
+            mobileFilterBtn.addEventListener('click', openMobileFilter);
+            closeMobileFilter.addEventListener('click', closeMobileFilterOverlay);
+            backToMainFilter.addEventListener('click', showMainFilterMenu);
+
+            // Mobile filter category buttons
+            document.querySelectorAll('.filter-category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showSubFilterMenu(btn.dataset.category);
+                });
+            });
+
+            // Mobile filter actions
+            document.getElementById('resetMobileFilters').addEventListener('click', resetAllFilters);
+            document.getElementById('applyMobileFilters').addEventListener('click', () => {
+                closeMobileFilterOverlay();
+                applyFilters();
+            });
+
+            // Close mobile filter on overlay click
+            mobileFilterOverlay.addEventListener('click', (e) => {
+                if (e.target === mobileFilterOverlay) {
+                    closeMobileFilterOverlay();
+                }
+            });
+        }
+
+        // Mobile filter functions
+        function openMobileFilter() {
+            mobileFilterOverlay.classList.remove('hidden');
+            mainFilterMenu.style.transform = 'translateX(0)';
+            mobileFilterBtn.classList.add('hidden');
+        }
+
+        function closeMobileFilterOverlay() {
+            mainFilterMenu.style.transform = 'translateX(100%)';
+            subFilterMenu.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                mobileFilterOverlay.classList.add('hidden');
+                mobileFilterBtn.classList.remove('hidden');
+            }, 300);
+        }
+
+        function showSubFilterMenu(category) {
+            const titles = {
+                stores: 'Stores',
+                brands: 'Brands',
+                price: 'Price Range',
+                types: 'Product Types',
+                discount: 'Discount Range'
+            };
+
+            subFilterTitle.textContent = titles[category];
+            generateSubFilterContent(category);
+            
+            mainFilterMenu.style.transform = 'translateX(-100%)';
+            subFilterMenu.style.transform = 'translateX(0)';
+        }
+
+        function showMainFilterMenu() {
+            subFilterMenu.style.transform = 'translateX(100%)';
+            mainFilterMenu.style.transform = 'translateX(0)';
+        }
+
+        function generateSubFilterContent(category) {
+            let content = '';
+
+            switch (category) {
+                case 'stores':
+                    const stores = ['amazon', 'currys', 'argos', 'john-lewis', 'very'];
+                    const storeLabels = ['Amazon', 'Currys', 'Argos', 'John Lewis', 'Very'];
+                    content = stores.map((store, index) => `
+                        <label class="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 cursor-pointer">
+                            <span>${storeLabels[index]}</span>
+                            <input type="checkbox" class="store-filter" value="${store}" data-label="${storeLabels[index]}" ${currentFilters.stores.includes(store) ? 'checked' : ''}>
+                        </label>
+                    `).join('');
+                    break;
+
+                case 'brands':
+                    const brands = ['apple', 'samsung', 'sony', 'lg', 'dell'];
+                    const brandLabels = ['Apple', 'Samsung', 'Sony', 'LG', 'Dell'];
+                    content = brands.map((brand, index) => `
+                        <label class="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 cursor-pointer">
+                            <span>${brandLabels[index]}</span>
+                            <input type="checkbox" class="brand-filter" value="${brand}" data-label="${brandLabels[index]}" ${currentFilters.brands.includes(brand) ? 'checked' : ''}>
+                        </label>
+                    `).join('');
+                    break;
+
+                case 'types':
+                    const types = ['gaming', 'ultrabook', 'smartphone', 'tablet', 'headphones'];
+                    const typeLabels = ['Gaming', 'Ultrabook', 'Smartphone', 'Tablet', 'Headphones'];
+                    content = types.map((type, index) => `
+                        <label class="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 cursor-pointer">
+                            <span>${typeLabels[index]}</span>
+                            <input type="checkbox" class="type-filter" value="${type}" data-label="${typeLabels[index]}" ${currentFilters.types.includes(type) ? 'checked' : ''}>
+                        </label>
+                    `).join('');
+                    break;
+
+                case 'price':
+                    content = `
+                        <div class="p-4">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                <span>Max Price</span>
+                                <span id="mobilePriceValue">£${currentFilters.maxPrice}</span>
+                            </div>
+                            <input type="range" id="mobilePriceRange" class="range-slider w-full mb-4" min="0" max="2000" value="${currentFilters.maxPrice}" step="50">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>£0</span>
+                                <span>£2000+</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'discount':
+                    content = `
+                        <div class="p-4">
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                <span>Min Discount</span>
+                                <span id="mobileDiscountValue">${currentFilters.minDiscount}%</span>
+                            </div>
+                            <input type="range" id="mobileDiscountRange" class="range-slider w-full mb-4" min="0" max="80" value="${currentFilters.minDiscount}" step="5">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>0%</span>
+                                <span>80%+</span>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            subFilterContent.innerHTML = content;
+
+            // Add event listeners for mobile filters
+            subFilterContent.querySelectorAll('.store-filter, .brand-filter, .type-filter').forEach(checkbox => {
+                checkbox.addEventListener('change', handleFilterChange);
+            });
+
+            if (category === 'price') {
+                const mobileSlider = document.getElementById('mobilePriceRange');
+                const mobileValue = document.getElementById('mobilePriceValue');
+                mobileSlider.addEventListener('input', (e) => {
+                    const value = parseInt(e.target.value);
+                    mobileValue.textContent = `£${value}`;
+                    currentFilters.maxPrice = value;
+                    document.getElementById('priceRange').value = value;
+                    document.getElementById('priceValue').textContent = `£${value}`;
+                });
+            }
+
+            if (category === 'discount') {
+                const mobileSlider = document.getElementById('mobileDiscountRange');
+                const mobileValue = document.getElementById('mobileDiscountValue');
+                mobileSlider.addEventListener('input', (e) => {
+                    const value = parseInt(e.target.value);
+                    mobileValue.textContent = `${value}%`;
+                    currentFilters.minDiscount = value;
+                    document.getElementById('discountRange').value = value;
+                    document.getElementById('discountValue').textContent = `${value}%`;
+                });
+            }
+        }
+
+        // Filter handling functions
+        function handleFilterChange(e) {
+            const filterType = e.target.classList.contains('store-filter') ? 'stores' :
+                             e.target.classList.contains('brand-filter') ? 'brands' : 'types';
+            
+            const value = e.target.value;
+            
+            if (e.target.checked) {
+                if (!currentFilters[filterType].includes(value)) {
+                    currentFilters[filterType].push(value);
+                }
+            } else {
+                currentFilters[filterType] = currentFilters[filterType].filter(item => item !== value);
+            }
+            
+            // Sync desktop and mobile checkboxes
+            document.querySelectorAll(`input[value="${value}"]`).forEach(input => {
+                input.checked = e.target.checked;
+            });
+            
+            applyFilters();
+        }
+
+        function handlePriceChange(e) {
+            const value = parseInt(e.target.value);
+            currentFilters.maxPrice = value;
+            updatePriceSlider();
+            applyFilters();
+        }
+
+        function handleDiscountChange(e) {
+            const value = parseInt(e.target.value);
+            currentFilters.minDiscount = value;
+            updateDiscountSlider();
+            applyFilters();
+        }
+
+        function handleSortChange(e) {
+            currentSort = e.target.value;
+            mobileSortSelect.value = currentSort; // Sync mobile dropdown
+            applyFilters();
+        }
+
+        function handleMobileSortChange(e) {
+            currentSort = e.target.value;
+            sortSelect.value = currentSort; // Sync desktop dropdown
+            applyFilters();
+        }
+
+        function updatePriceSlider() {
+            const value = currentFilters.maxPrice;
+            document.getElementById('priceValue').textContent = `£${value}`;
+            const mobileValue = document.getElementById('mobilePriceValue');
+            if (mobileValue) mobileValue.textContent = `£${value}`;
+        }
+
+        function updateDiscountSlider() {
+            const value = currentFilters.minDiscount;
+            document.getElementById('discountValue').textContent = `${value}%`;
+            const mobileValue = document.getElementById('mobileDiscountValue');
+            if (mobileValue) mobileValue.textContent = `${value}%`;
+        }
+
+        function applyFilters() {
+            showLoading();
+            
+            setTimeout(() => {
+                // Filter products
+                filteredProducts = products.filter(product => {
+                    // Store filter
+                    if (currentFilters.stores.length > 0 && !currentFilters.stores.includes(product.store.toLowerCase().replace(' ', '-'))) {
+                        return false;
+                    }
+                    
+                    // Brand filter
+                    if (currentFilters.brands.length > 0 && !currentFilters.brands.includes(product.brand)) {
+                        return false;
+                    }
+                    
+                    // Type filter
+                    if (currentFilters.types.length > 0 && !currentFilters.types.includes(product.type)) {
+                        return false;
+                    }
+                    
+                    // Price filter
+                    if (product.currentPrice > currentFilters.maxPrice) {
+                        return false;
+                    }
+                    
+                    // Discount filter
+                    if (product.discount < currentFilters.minDiscount) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                // Sort products
+                sortProducts();
+                
+                // Render results
+                renderProducts();
+                updateActiveFilters();
+                updateURL();
+                hideLoading();
+            }, 500);
+        }
+
+        function sortProducts() {
+            switch (currentSort) {
+                case 'hotness':
+                    filteredProducts.sort((a, b) => b.hotness - a.hotness);
+                    break;
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.currentPrice - b.currentPrice);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.currentPrice - a.currentPrice);
+                    break;
+                case 'discount':
+                    filteredProducts.sort((a, b) => b.discount - a.discount);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+            }
+        }
+
+        function renderProducts() {
+            if (filteredProducts.length === 0) {
+                productGrid.classList.add('hidden');
+                noResultsState.classList.remove('hidden');
+            } else {
+                productGrid.classList.remove('hidden');
+                noResultsState.classList.add('hidden');
+                
+                productGrid.innerHTML = filteredProducts.map(product => `
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                        <div class="relative">
+                            <img src="${product.image}" alt="${product.title}" class="w-full h-48 object-cover">
+                            <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                                -${product.discount}%
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-2 line-clamp-2">${product.title}</h3>
+                            
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-2xl font-bold text-primary-600">£${product.currentPrice}</span>
+                                <span class="text-sm text-gray-500 line-through">£${product.originalPrice}</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                <span class="font-medium">${product.store}</span>
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-fire text-orange-500"></i>
+                                        <span class="font-medium">+${product.hotness}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fas fa-comment text-gray-400"></i>
+                                        <span>${product.comments}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-lg font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            resultsCount.textContent = filteredProducts.length;
+        }
+
+        function updateActiveFilters() {
+            const filterTags = [];
+            
+            // Add store filters
+            currentFilters.stores.forEach(store => {
+                const label = document.querySelector(`input[value="${store}"]`).dataset.label;
+                filterTags.push({ type: 'stores', value: store, label });
+            });
+            
+            // Add brand filters
+            currentFilters.brands.forEach(brand => {
+                const label = document.querySelector(`input[value="${brand}"]`).dataset.label;
+                filterTags.push({ type: 'brands', value: brand, label });
+            });
+            
+            // Add type filters
+            currentFilters.types.forEach(type => {
+                const label = document.querySelector(`input[value="${type}"]`).dataset.label;
+                filterTags.push({ type: 'types', value: type, label });
+            });
+            
+            // Add price filter
+            if (currentFilters.maxPrice < 2000) {
+                filterTags.push({ type: 'price', value: currentFilters.maxPrice, label: `Max £${currentFilters.maxPrice}` });
+            }
+            
+            // Add discount filter
+            if (currentFilters.minDiscount > 0) {
+                filterTags.push({ type: 'discount', value: currentFilters.minDiscount, label: `Min ${currentFilters.minDiscount}% off` });
+            }
+            
+            if (filterTags.length > 0) {
+                activeFilters.classList.remove('hidden');
+                activeFilters.innerHTML = filterTags.map(tag => `
+                    <span class="inline-flex items-center space-x-2 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm">
+                        <span>${tag.label}</span>
+                        <button onclick="removeFilter('${tag.type}', '${tag.value}')" class="hover:text-primary-600 dark:hover:text-primary-400">
+                            <i class="fas fa-times text-xs"></i>
+                        </button>
+                    </span>
+                `).join('');
+                
+                // Update mobile filter count
+                activeFiltersCount.textContent = filterTags.length;
+                activeFiltersCount.classList.remove('hidden');
+            } else {
+                activeFilters.classList.add('hidden');
+                activeFiltersCount.classList.add('hidden');
+            }
+        }
+
+        function removeFilter(type, value) {
+            if (type === 'price') {
+                currentFilters.maxPrice = 2000;
+                document.getElementById('priceRange').value = 2000;
+                updatePriceSlider();
+            } else if (type === 'discount') {
+                currentFilters.minDiscount = 0;
+                document.getElementById('discountRange').value = 0;
+                updateDiscountSlider();
+            } else {
+                currentFilters[type] = currentFilters[type].filter(item => item !== value);
+                document.querySelectorAll(`input[value="${value}"]`).forEach(input => {
+                    input.checked = false;
+                });
+            }
+            
+            applyFilters();
+        }
+
+        function resetAllFilters() {
+            currentFilters = {
+                stores: [],
+                brands: [],
+                types: [],
+                maxPrice: 2000,
+                minDiscount: 0
+            };
+            
+            // Reset all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+            
+            // Reset sliders
+            document.getElementById('priceRange').value = 2000;
+            document.getElementById('discountRange').value = 0;
+            updatePriceSlider();
+            updateDiscountSlider();
+            
+            // Reset sort
+            currentSort = 'hotness';
+            sortSelect.value = 'hotness';
+            
+            applyFilters();
+        }
+
+        function showLoading() {
+            loadingState.classList.remove('hidden');
+            productGrid.classList.add('hidden');
+            noResultsState.classList.add('hidden');
+        }
+
+        function hideLoading() {
+            loadingState.classList.add('hidden');
+        }
+
+        function updateURL() {
+            const params = new URLSearchParams();
+            
+            if (currentFilters.stores.length > 0) params.set('stores', currentFilters.stores.join(','));
+            if (currentFilters.brands.length > 0) params.set('brands', currentFilters.brands.join(','));
+            if (currentFilters.types.length > 0) params.set('types', currentFilters.types.join(','));
+            if (currentFilters.maxPrice < 2000) params.set('maxPrice', currentFilters.maxPrice);
+            if (currentFilters.minDiscount > 0) params.set('minDiscount', currentFilters.minDiscount);
+            if (currentSort !== 'hotness') params.set('sort', currentSort);
+            
+            const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+            window.history.replaceState({}, '', newURL);
+        }
+
+        function loadFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.has('stores')) {
+                currentFilters.stores = params.get('stores').split(',');
+            }
+            if (params.has('brands')) {
+                currentFilters.brands = params.get('brands').split(',');
+            }
+            if (params.has('types')) {
+                currentFilters.types = params.get('types').split(',');
+            }
+            if (params.has('maxPrice')) {
+                currentFilters.maxPrice = parseInt(params.get('maxPrice'));
+            }
+            if (params.has('minDiscount')) {
+                currentFilters.minDiscount = parseInt(params.get('minDiscount'));
+            }
+            if (params.has('sort')) {
+                currentSort = params.get('sort');
+                sortSelect.value = currentSort;
+            }
+            
+            // Update UI to reflect loaded filters
+            currentFilters.stores.forEach(store => {
+                document.querySelectorAll(`input[value="${store}"]`).forEach(input => {
+                    input.checked = true;
+                });
+            });
+            
+            currentFilters.brands.forEach(brand => {
+                document.querySelectorAll(`input[value="${brand}"]`).forEach(input => {
+                    input.checked = true;
+                });
+            });
+            
+            currentFilters.types.forEach(type => {
+                document.querySelectorAll(`input[value="${type}"]`).forEach(input => {
+                    input.checked = true;
+                });
+            });
+            
+            document.getElementById('priceRange').value = currentFilters.maxPrice;
+            document.getElementById('discountRange').value = currentFilters.minDiscount;
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFromURL();
+            init();
+        });
+    </script>
+</body>
+</html>

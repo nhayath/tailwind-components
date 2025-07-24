@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealFinder - Best Deals & Discounts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            html { color-scheme: dark; }
+        }
+        @media (min-width: 769px) {
+            html { color-scheme: light; }
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tag text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+                        DealFinder
+                    </span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               placeholder="Search for deals, stores, or products..."
+                               class="w-full px-4 py-2 pl-10 pr-4 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Categories</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Stores</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Coupons</a>
+                    <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Sign In
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search -->
+        <div class="md:hidden px-4 pb-4">
+            <div class="relative">
+                <input type="text" 
+                       placeholder="Search deals..."
+                       class="w-full px-4 py-3 pl-10 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-gray-800 dark:to-gray-900 py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-6">
+                Find the <span class="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">Best Deals</span><br>
+                Save More Every Day
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+                Discover amazing discounts, exclusive coupons, and limited-time offers from your favorite brands.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                    Browse Deals
+                </button>
+                <button class="border border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-gray-800 px-8 py-3 rounded-lg font-medium transition-colors">
+                    Submit a Deal
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Categories -->
+    <section class="py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Popular Categories</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-laptop text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Electronics</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-tshirt text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Fashion</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-home text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Home</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-gamepad text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Gaming</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-utensils text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Food</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-plane text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Travel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Deals -->
+    <section class="py-8 md:py-12 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold">Featured Deals</h2>
+                <a href="#" class="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium">View All</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Deal Card 1 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800 flex items-center justify-center">
+                            <i class="fas fa-laptop text-4xl text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            50% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">MacBook Air M2 - Limited Time Offer</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Get the latest MacBook Air with M2 chip at an incredible discount.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$999</span>
+                                <span class="text-sm text-gray-500 line-through">$1,999</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 2 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 flex items-center justify-center">
+                            <i class="fas fa-headphones text-4xl text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-accent-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            30% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">Sony WH-1000XM5 Headphones</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Premium noise-canceling headphones with exceptional sound quality.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$279</span>
+                                <span class="text-sm text-gray-500 line-through">$399</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 3 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 flex items-center justify-center">
+                            <i class="fas fa-mobile-alt text-4xl text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-orange-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            25% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">iPhone 15 Pro - Early Bird Special</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Latest iPhone with titanium design and advanced camera system.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$899</span>
+                                <span class="text-sm text-gray-500 line-through">$1,199</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 md:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Never Miss a Deal</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">Subscribe to our newsletter and get the best deals delivered to your inbox.</p>
+            <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" 
+                       placeholder="Enter your email"
+                       class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                <button class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tag text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">DealFinder</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Your ultimate destination for the best deals and discounts online.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Electronics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Fashion</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Home & Garden</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Travel</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2024 DealFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

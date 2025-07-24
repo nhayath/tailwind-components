@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealFinder - Best Deals & Discounts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @media (max-width: 768px) {
+            html { color-scheme: dark; }
+        }
+        @media (min-width: 769px) {
+            html { color-scheme: light; }
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 pb-16 md:pb-0">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Mobile: Logo and Search Side by Side -->
+                <div class="flex items-center space-x-3 flex-1 md:flex-none">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2 flex-shrink-0">
+                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tag text-white text-sm"></i>
+                        </div>
+                        <span class="text-lg md:text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+                            DealFinder
+                        </span>
+                    </div>
+                    
+                    <!-- Mobile Search -->
+                    <div class="md:hidden flex-1 max-w-xs">
+                        <div class="relative">
+                            <input type="text" 
+                                   placeholder="Search deals..."
+                                   class="w-full px-3 py-2 pl-8 pr-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                            <i class="fas fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-8">
+                    <div class="relative w-full">
+                        <input type="text" 
+                               placeholder="Search for deals, stores, or products..."
+                               class="w-full px-4 py-2 pl-10 pr-4 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <div class="relative group">
+                        <button id="categoriesBtn" class="flex items-center space-x-1 text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                            <span>Categories</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        
+                        <!-- Categories Megamenu -->
+                        <div id="categoriesMegamenu" class="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="p-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <!-- Left Column -->
+                                    <div class="space-y-3">
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-laptop text-blue-600 dark:text-blue-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Electronics</span>
+                                        </a>
+                                        
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-home text-green-600 dark:text-green-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Home & Garden</span>
+                                        </a>
+                                        
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-book text-purple-600 dark:text-purple-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Books</span>
+                                        </a>
+                                    </div>
+                                    
+                                    <!-- Right Column -->
+                                    <div class="space-y-3">
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-pink-100 dark:bg-pink-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-tshirt text-pink-600 dark:text-pink-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Fashion</span>
+                                        </a>
+                                        
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-futbol text-orange-600 dark:text-orange-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Sports</span>
+                                        </a>
+                                        
+                                        <a href="#" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                                            <div class="w-8 h-8 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-car text-red-600 dark:text-red-400 text-sm"></i>
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">Automotive</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- View All Categories Button -->
+                                <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-600">
+                                    <button class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                        View All Categories
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Stores</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Coupons</a>
+                    <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Sign In
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sponsored Deals Carousel -->
+    <section class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Sponsored Deals</h2>
+                <div class="flex space-x-2">
+                    <button id="prevSlide" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-chevron-left text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                    <button id="nextSlide" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-chevron-right text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Carousel Container -->
+            <div class="relative overflow-hidden">
+                <div id="carouselTrack" class="flex transition-transform duration-300 ease-in-out">
+                    <!-- Sponsored Deal 1 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-yellow-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <span class="text-2xl font-bold text-yellow-600">S</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Samsung Galaxy</h3>
+                                    <p class="text-sm opacity-90">Up to 40% off</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-yellow-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 2 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-blue-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-laptop text-2xl text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">MacBook Pro</h3>
+                                    <p class="text-sm opacity-90">Save £300</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 3 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-green-500 to-teal-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-green-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-headphones text-2xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">AirPods Pro</h3>
+                                    <p class="text-sm opacity-90">25% discount</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 4 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-red-500 to-pink-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-red-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-gamepad text-2xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">PlayStation 5</h3>
+                                    <p class="text-sm opacity-90">Bundle deals</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sponsored Deal 5 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-yellow-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <span class="text-2xl font-bold text-yellow-600">S</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Samsung Galaxy</h3>
+                                    <p class="text-sm opacity-90">Up to 40% off</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-yellow-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 6 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-blue-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-laptop text-2xl text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">MacBook Pro</h3>
+                                    <p class="text-sm opacity-90">Save £300</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 7 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-green-500 to-teal-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-green-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-headphones text-2xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">AirPods Pro</h3>
+                                    <p class="text-sm opacity-90">25% discount</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sponsored Deal 8 -->
+                    <div class="flex-none w-full md:w-1/3 lg:w-1/4 px-2">
+                        <div class="bg-gradient-to-r from-red-500 to-pink-600 rounded-lg p-4 text-white relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-white text-red-600 px-2 py-1 rounded text-xs font-bold">
+                                SPONSORED
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-gamepad text-2xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">PlayStation 5</h3>
+                                    <p class="text-sm opacity-90">Bundle deals</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button class="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                                    Shop Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Indicators -->
+            <div class="flex justify-center mt-4 space-x-2">
+                <button class="carousel-indicator w-2 h-2 rounded-full bg-primary-600 transition-colors" data-slide="0"></button>
+                <button class="carousel-indicator w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-colors" data-slide="1"></button>
+                <button class="carousel-indicator w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-colors" data-slide="2"></button>
+                <button class="carousel-indicator w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-colors" data-slide="3"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="md:hidden fixed inset-0 z-50 bg-black bg-opacity-50 hidden">
+        <!-- Main Mobile Menu -->
+        <div id="mainMobileMenu" class="fixed left-0 top-0 h-full w-80 bg-gray-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <!-- Menu Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-700">
+                <h2 class="text-lg font-semibold">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Menu Content -->
+            <div class="p-4">
+                <!-- Main Navigation -->
+                <nav class="space-y-4 mb-8">
+                    <a href="#" class="flex items-center space-x-3 text-orange-400 hover:text-orange-300 transition-colors">
+                        <i class="fas fa-home text-lg"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-tag text-lg"></i>
+                        <span>Deals</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-ticket-alt text-lg"></i>
+                        <span>Discount Codes</span>
+                    </a>
+                    <button id="categoriesMenuBtn" class="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-th-large text-lg"></i>
+                            <span>Categories</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-gift text-lg"></i>
+                        <span>Freebies</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-comments text-lg"></i>
+                        <span>Discussions</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-newspaper text-lg"></i>
+                        <span>Magazine</span>
+                    </a>
+                </nav>
+                
+                <!-- Highlights Section -->
+                <div class="mb-8">
+                    <h3 class="text-white font-semibold mb-4">Highlights</h3>
+                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors">
+                        <i class="fas fa-star text-lg"></i>
+                        <span>Club</span>
+                    </a>
+                </div>
+                
+                <!-- Account Section -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Account</h3>
+                    <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        Sign In / Register
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Categories Submenu -->
+        <div id="categoriesSubmenu" class="fixed left-0 top-0 h-full w-80 bg-gray-900 text-white transform translate-x-full transition-transform duration-300 ease-in-out">
+            <!-- Categories Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-700">
+                <div class="flex items-center space-x-3">
+                    <button id="backToMainMenu" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-arrow-left text-lg"></i>
+                    </button>
+                    <h2 class="text-lg font-semibold">Categories</h2>
+                </div>
+                <button id="closeCategoriesMenu" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Categories Content -->
+            <div class="p-4">
+                <div class="mb-4">
+                    <a href="#" class="text-orange-400 hover:text-orange-300 transition-colors text-sm">See all</a>
+                </div>
+                
+                <nav class="space-y-4">
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-home text-lg"></i>
+                            <span>Home & Living</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-laptop text-lg"></i>
+                            <span>Electronics</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-baby text-lg"></i>
+                            <span>Family & Kids</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-tshirt text-lg"></i>
+                            <span>Fashion & Accessories</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-tools text-lg"></i>
+                            <span>Garden & Do It Yourself</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-plane text-lg"></i>
+                            <span>Travel</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-music text-lg"></i>
+                            <span>Culture & Leisure</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span>Groceries</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-briefcase text-lg"></i>
+                            <span>Services & Contracts</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between text-gray-300 hover:text-white transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-heart text-lg"></i>
+                            <span>Health & Beauty</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Categories -->
+    <section class="py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold mb-6 text-center md:text-left">Popular Categories</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-laptop text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Electronics</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-tshirt text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Fashion</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-home text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Home</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-gamepad text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Gaming</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-utensils text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Food</p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg dark:hover:shadow-gray-700/20 transition-shadow border border-gray-200 dark:border-gray-700">
+                    <i class="fas fa-plane text-2xl text-primary-600 mb-2"></i>
+                    <p class="text-sm font-medium">Travel</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Deals -->
+    <section class="py-8 md:py-12 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold">Featured Deals</h2>
+                <a href="#" class="text-primary-600 dark:text-primary-400 hover:underline text-sm font-medium">View All</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Deal Card 1 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800 flex items-center justify-center">
+                            <i class="fas fa-laptop text-4xl text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            50% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">MacBook Air M2 - Limited Time Offer</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Get the latest MacBook Air with M2 chip at an incredible discount.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$999</span>
+                                <span class="text-sm text-gray-500 line-through">$1,999</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 2 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900 dark:to-purple-800 flex items-center justify-center">
+                            <i class="fas fa-headphones text-4xl text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-accent-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            30% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">Sony WH-1000XM5 Headphones</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Premium noise-canceling headphones with exceptional sound quality.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$279</span>
+                                <span class="text-sm text-gray-500 line-through">$399</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Card 3 -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900 dark:to-green-800 flex items-center justify-center">
+                            <i class="fas fa-mobile-alt text-4xl text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-orange-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            25% OFF
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2">iPhone 15 Pro - Early Bird Special</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Latest iPhone with titanium design and advanced camera system.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg font-bold text-accent-600">$899</span>
+                                <span class="text-sm text-gray-500 line-through">$1,199</span>
+                            </div>
+                            <button class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
+                                View Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-gray-800 dark:to-gray-900 py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold mb-6">
+                Find the <span class="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">Best Deals</span><br>
+                Save More Every Day
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+                Discover amazing discounts, exclusive coupons, and limited-time offers from your favorite brands.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                    Browse Deals
+                </button>
+                <button class="border border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-gray-800 px-8 py-3 rounded-lg font-medium transition-colors">
+                    Submit a Deal
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 md:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Never Miss a Deal</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">Subscribe to our newsletter and get the best deals delivered to your inbox.</p>
+            <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" 
+                       placeholder="Enter your email"
+                       class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none">
+                <button class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-tag text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">DealFinder</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Your ultimate destination for the best deals and discounts online.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Electronics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Fashion</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Home & Garden</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Travel</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2024 DealFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="grid grid-cols-4 h-16">
+            <!-- Menu -->
+            <button id="openMobileMenu" class="flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                <i class="fas fa-bars text-lg"></i>
+                <span class="text-xs font-medium">Menu</span>
+            </button>
+            
+            <!-- Alerts -->
+            <a href="#" class="flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                <i class="fas fa-bell text-lg"></i>
+                <span class="text-xs font-medium">Alerts</span>
+            </a>
+            
+            <!-- Post -->
+            <a href="#" class="flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                <i class="fas fa-plus-square text-lg"></i>
+                <span class="text-xs font-medium">Post</span>
+            </a>
+            
+            <!-- Log In -->
+            <a href="#" class="flex flex-col items-center justify-center space-y-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                <i class="fas fa-user text-lg"></i>
+                <span class="text-xs font-medium">Log In</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Mobile Menu Functionality
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mainMobileMenu = document.getElementById('mainMobileMenu');
+        const categoriesSubmenu = document.getElementById('categoriesSubmenu');
+        const openMobileMenuBtn = document.getElementById('openMobileMenu');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+        const closeCategoriesMenuBtn = document.getElementById('closeCategoriesMenu');
+        const categoriesMenuBtn = document.getElementById('categoriesMenuBtn');
+        const backToMainMenuBtn = document.getElementById('backToMainMenu');
+
+        // Open main mobile menu
+        function openMainMenu() {
+            mobileMenuOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                mainMobileMenu.classList.remove('-translate-x-full');
+            }, 10);
+        }
+
+        // Close all menus
+        function closeAllMenus() {
+            mainMobileMenu.classList.add('-translate-x-full');
+            mainMobileMenu.style.transform = '';
+            categoriesSubmenu.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileMenuOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        // Show categories submenu (Apple-style push animation)
+        function showCategoriesMenu() {
+            // Push main menu to the left
+            mainMobileMenu.style.transform = 'translateX(-320px)';
+            // Slide categories menu in from the right
+            categoriesSubmenu.classList.remove('translate-x-full');
+        }
+
+        // Show main menu (back from categories)
+        function showMainMenu() {
+            // Slide categories menu out to the right
+            categoriesSubmenu.classList.add('translate-x-full');
+            // Bring main menu back to center
+            mainMobileMenu.style.transform = 'translateX(0)';
+        }
+
+        // Event listeners
+        openMobileMenuBtn.addEventListener('click', openMainMenu);
+        closeMobileMenuBtn.addEventListener('click', closeAllMenus);
+        closeCategoriesMenuBtn.addEventListener('click', closeAllMenus);
+        categoriesMenuBtn.addEventListener('click', showCategoriesMenu);
+        backToMainMenuBtn.addEventListener('click', showMainMenu);
+
+        // Close menu when clicking overlay
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) {
+                closeAllMenus();
+            }
+        });
+
+        // Close menu with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
+                closeAllMenus();
+            }
+        });
+
+        // Sponsored Deals Carousel Functionality
+        const carouselTrack = document.getElementById('carouselTrack');
+        const prevSlideBtn = document.getElementById('prevSlide');
+        const nextSlideBtn = document.getElementById('nextSlide');
+        const indicatorsContainer = document.querySelector('.flex.justify-center.space-x-2.mt-4');
+        
+        let currentSlide = 0;
+        const totalSlides = 8;
+        let slidesToShow = 1;
+        let maxSlides = 0;
+        
+        // Determine slides to show based on screen size
+        function updateSlidesToShow() {
+            if (window.innerWidth >= 1024) {
+                slidesToShow = 4;
+            } else if (window.innerWidth >= 768) {
+                slidesToShow = 3;
+            } else {
+                slidesToShow = 1;
+            }
+            
+            // Calculate maximum slides (number of indicator dots needed)
+            maxSlides = Math.ceil(totalSlides / slidesToShow);
+            
+            // Update navigation buttons visibility
+            updateNavigationButtons();
+            
+            // Update indicators
+            updateIndicators();
+        }
+        
+        // Update navigation buttons visibility
+        function updateNavigationButtons() {
+            if (maxSlides <= 1) {
+                // Hide navigation buttons when all slides are visible
+                prevSlideBtn.style.display = 'none';
+                nextSlideBtn.style.display = 'none';
+            } else {
+                // Show navigation buttons when navigation is needed
+                prevSlideBtn.style.display = 'block';
+                nextSlideBtn.style.display = 'block';
+            }
+        }
+        
+        // Update indicators based on screen size
+        function updateIndicators() {
+            // Clear existing indicators
+            indicatorsContainer.innerHTML = '';
+            
+            // Create indicators only if needed
+            if (maxSlides > 1) {
+                for (let i = 0; i < maxSlides; i++) {
+                    const indicator = document.createElement('button');
+                    indicator.className = 'carousel-indicator w-2 h-2 rounded-full transition-colors';
+                    indicator.setAttribute('data-slide', i);
+                    
+                    if (i === currentSlide) {
+                        indicator.classList.add('bg-primary-600');
+                    } else {
+                        indicator.classList.add('bg-gray-300', 'dark:bg-gray-600');
+                    }
+                    
+                    indicator.addEventListener('click', () => goToSlide(i));
+                    indicatorsContainer.appendChild(indicator);
+                }
+            }
+        }
+        
+        // Update carousel position
+        function updateCarousel() {
+            // Calculate how many slides to move based on current page
+            const slidesToMove = currentSlide * slidesToShow;
+            const slideWidth = 100 / totalSlides;
+            const translateX = -(slidesToMove * slideWidth);
+            carouselTrack.style.transform = `translateX(${translateX}%)`;
+            
+            // Update indicators
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentSlide) {
+                    indicator.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+                    indicator.classList.add('bg-primary-600');
+                } else {
+                    indicator.classList.remove('bg-primary-600');
+                    indicator.classList.add('bg-gray-300', 'dark:bg-gray-600');
+                }
+            });
+        }
+        
+        // Next slide
+        function nextSlide() {
+            if (maxSlides <= 1) return; // Don't navigate if all slides are visible
+            currentSlide = currentSlide >= maxSlides - 1 ? 0 : currentSlide + 1;
+            updateCarousel();
+        }
+        
+        // Previous slide
+        function prevSlide() {
+            if (maxSlides <= 1) return; // Don't navigate if all slides are visible
+            currentSlide = currentSlide <= 0 ? maxSlides - 1 : currentSlide - 1;
+            updateCarousel();
+        }
+        
+        // Go to specific slide
+        function goToSlide(slideIndex) {
+            if (maxSlides <= 1) return; // Don't navigate if all slides are visible
+            currentSlide = Math.min(slideIndex, maxSlides - 1);
+            updateCarousel();
+        }
+        
+        // Event listeners
+        nextSlideBtn.addEventListener('click', nextSlide);
+        prevSlideBtn.addEventListener('click', prevSlide);
+        
+        // Auto-play carousel (only if navigation is needed)
+        let autoPlayInterval;
+        
+        function startAutoPlay() {
+            if (maxSlides > 1) {
+                autoPlayInterval = setInterval(nextSlide, 5000);
+            }
+        }
+        
+        function stopAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
+        }
+        
+        // Pause auto-play on hover
+        const carouselSection = document.querySelector('section');
+        carouselSection.addEventListener('mouseenter', () => {
+            stopAutoPlay();
+        });
+        
+        carouselSection.addEventListener('mouseleave', () => {
+            startAutoPlay();
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            updateSlidesToShow();
+            currentSlide = 0; // Reset to first slide on resize
+            updateCarousel();
+            stopAutoPlay();
+            startAutoPlay();
+        });
+        
+        // Initialize carousel
+        updateSlidesToShow();
+        updateCarousel();
+        startAutoPlay();
+        
+        // Categories Megamenu Functionality
+        const categoriesBtn = document.getElementById('categoriesBtn');
+        const categoriesMegamenu = document.getElementById('categoriesMegamenu');
+        let megamenuTimeout;
+        
+        // Show megamenu
+        function showMegamenu() {
+            clearTimeout(megamenuTimeout);
+            categoriesMegamenu.classList.remove('opacity-0', 'invisible');
+            categoriesMegamenu.classList.add('opacity-100', 'visible');
+        }
+        
+        // Hide megamenu with delay
+        function hideMegamenu() {
+            megamenuTimeout = setTimeout(() => {
+                categoriesMegamenu.classList.remove('opacity-100', 'visible');
+                categoriesMegamenu.classList.add('opacity-0', 'invisible');
+            }, 150);
+        }
+        
+        // Mouse events for hover functionality
+        categoriesBtn.addEventListener('mouseenter', showMegamenu);
+        categoriesBtn.addEventListener('mouseleave', hideMegamenu);
+        categoriesMegamenu.addEventListener('mouseenter', showMegamenu);
+        categoriesMegamenu.addEventListener('mouseleave', hideMegamenu);
+        
+        // Click event for mobile/touch devices
+        categoriesBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (categoriesMegamenu.classList.contains('opacity-0')) {
+                showMegamenu();
+            } else {
+                hideMegamenu();
+            }
+        });
+        
+        // Close megamenu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!categoriesBtn.contains(e.target) && !categoriesMegamenu.contains(e.target)) {
+                hideMegamenu();
+            }
+        });
+        
+        // Close megamenu with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && categoriesMegamenu.classList.contains('opacity-100')) {
+                hideMegamenu();
+            }
+        });
+    </script>
+</body>
+</html>
